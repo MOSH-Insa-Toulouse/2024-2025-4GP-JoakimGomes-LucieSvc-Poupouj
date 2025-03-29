@@ -1,4 +1,4 @@
-// Devinition des pins
+// Definition des pins
 
 // Encodeur Rotatoire
 #define encoder0PinA  2  //CLK Output A Do not use other pin for clock as we are using interrupt
@@ -29,7 +29,7 @@ Adafruit_SSD1306 ecranOLED(nombreDePixelsEnLargeur, nombreDePixelsEnHauteur, &Wi
 SoftwareSerial mySerial(rxPin ,txPin); //D�finition du software serial
 
 
-// Potentiomètre Digital (TP MCP41100_R_Test)
+// Potentiomètre Digital (TP MCP41100_R_Test) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #include <SPI.h>
 const byte csPin           = 10;      // MCP42100 chip select pin
 const int  maxPositions    = 256;     // wiper can move from 0 to 255 = 256 positions
@@ -41,7 +41,7 @@ const byte pot0Shutdown    = 0x21;    // pot0 shutdown // B 0010 0001
 
 
 
-// Pour le potentiom_tre Digital mais j'ai pas compris ce que ça fait et si ça nous ait utile 
+// Pour le potentiom_tre Digital mais j'ai pas compris ce que ça fait et si ça nous ait utile !!!!!!!!!!!!!!!!!!!
 void setPotWiper(int addr, int pos) {
   pos = constrain(pos, 0, 255);            // limit wiper setting to range of 0 to 255
   digitalWrite(csPin, LOW);                // select chip
@@ -145,15 +145,7 @@ void loop() {
 		Serial.print((char)mySerial.read());
 	}
 
-  // Potentiomètre Digital //
-  // step through the range of the digital pot
-  for (int i = 0; i < 256; i++) 
-  {
-    Serial.println(i);
-    SPIWrite(MCP_WRITE, i, ssMCPin);
-    delay(WAIT_DELAY);
-  }
-  delay (WAIT_DELAY*5);
+  // Potentiomètre Digital // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 }
 
 
