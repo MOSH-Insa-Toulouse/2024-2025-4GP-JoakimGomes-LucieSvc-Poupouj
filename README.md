@@ -4,9 +4,9 @@
 ### Sommaire
 
 <span style="color:blue;">
-Introduction
-Livrables
-Matériel à disposion
+- Introduction
+- Livrables
+- Matériel à disposion
 
 
 
