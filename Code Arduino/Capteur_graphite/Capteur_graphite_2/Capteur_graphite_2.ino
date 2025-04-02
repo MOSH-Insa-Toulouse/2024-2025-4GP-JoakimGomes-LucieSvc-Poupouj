@@ -5,6 +5,8 @@
 #define encoder0PinB  4  //DT Output B
 #define Switch 5 // Switch connection if available
 volatile int encoder0Pos = 0;
+volatile int encoder0Pos = 0;
+volatile bool encoderChanged = false;
 
 // Ecran OLED
 #include <Adafruit_SSD1306.h>
@@ -16,6 +18,7 @@ Adafruit_SSD1306 ecranOLED(nombreDePixelsEnLargeur, nombreDePixelsEnHauteur, &Wi
 
 
 void setup() {
+  Serial.begin(9600);
   // Encodeur Rotatoire
   pinMode(encoder0PinA, INPUT); 
   digitalWrite(encoder0PinA, HIGH);       // turn on pullup resistor
@@ -27,55 +30,55 @@ void setup() {
   if(!ecranOLED.begin(SSD1306_SWITCHCAPVCC, adresseI2CecranOLED))
     while(1);                               // Arrêt du programme (boucle infinie) si échec d'initialisation
   ecranOLED.clearDisplay();
-  ecranOLED.setTextSize(2:1);                   // Taille des caractères (2:1)
+  ecranOLED.setTextSize(3);                   // Taille des caractères (2:1)
   ecranOLED.setTextColor(SSD1306_WHITE); 
-  ecranOLED.println("Configuration");
+  ecranOLED.println("Config");
   ecranOLED.println("Mesure");
   ecranOLED.display();                          // Transfert le buffer à l'écran
-
-
 }
 
 
 
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
-
-
-
-
+  if (encoderChanged) {  // Si la valeur de l'encodeur a changé
+    encoderChanged = false;
+    afficherMenu();  // Afficher la nouvelle valeur
+  }
 }
 
 
-
-
+void afficherMenu(int encoder0Pos) {
+  Serial.println(encoder0Pos);
+  ecranOLED.clearDisplay();
+  ecranOLED.setTextSize(3);
+  if (encoder0Pos % 2 == 0) {
+      ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
+      ecranOLED.println("Config");
+      ecranOLED.setTextColor(SSD1306_WHITE, SSD1306_BLACK);
+      ecranOLED.println("Mesure");
+  } else {
+      ecranOLED.setTextColor(SSD1306_WHITE, SSD1306_BLACK);
+      ecranOLED.println("Config");
+      ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
+      ecranOLED.println("Mesure");
+    }
+    ecranOLED.display();
+    encoderChanged = false;
+}
 
 
 // Encodeur Rotatoire : Ajustement du cran de l'encodeur
 void doEncoder() {
   if (digitalRead(encoder0PinA)==HIGH && digitalRead(encoder0PinB)==HIGH) {
-    encoder0Pos++;
-  } else if (digitalRead(encoder0PinA)==HIGH && digitalRead(encoder0PinB)==LOW) {
     encoder0Pos--;
+    afficherMenu(encoder0Pos);
+  } else if (digitalRead(encoder0PinA)==HIGH && digitalRead(encoder0PinB)==LOW) {
+    encoder0Pos++;
+    afficherMenu(encoder0Pos);
   } 
-
-  if (encoder0Pos%2 == 0) {
-    ecranOLED.clearDisplay();
-    ecranOLED.setTextSize(2:1);
-    ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
-    ecranOLED.println("Configuration");
-    ecranOLED.setTextColor(SSD1306_WHITE, SSD1306_BLACK); 
-    ecranOLED.println("Mesure");
-    ecranOLED.display(); 
-  } else if (encoder0Pos%2 == 1) {
-    ecranOLED.clearDisplay();
-    ecranOLED.setTextSize(2:1);
-    ecranOLED.setTextColor(SSD1306_WHITE, SSD1306_BLACK);
-    ecranOLED.println("Configuration");
-    ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE); 
-    ecranOLED.println("Mesure");
-    ecranOLED.display(); 
-  }
+  encoderChanged = true;
 }
+
+
+

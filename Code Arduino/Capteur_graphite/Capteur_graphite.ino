@@ -155,3 +155,26 @@ void doEncoder() {
     encoder0Pos--;
   }  
 }
+
+
+
+
+
+Serial.println(encoder0Pos);
+  if (encoder0Pos%2 == 0) {
+    ecranOLED.clearDisplay();
+    ecranOLED.setTextSize(3);
+    ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
+    ecranOLED.println("Config");
+    ecranOLED.setTextColor(SSD1306_WHITE, SSD1306_BLACK); 
+    ecranOLED.println("Mesure");
+    ecranOLED.display(); 
+  } else if (encoder0Pos%2 == 1) {
+    ecranOLED.clearDisplay();
+    ecranOLED.setTextSize(3);
+    ecranOLED.setTextColor(SSD1306_WHITE, SSD1306_BLACK);
+    ecranOLED.println("Config");
+    ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE); 
+    ecranOLED.println("Mesure");
+    ecranOLED.display(); 
+  }
