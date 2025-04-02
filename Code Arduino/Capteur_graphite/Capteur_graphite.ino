@@ -9,9 +9,9 @@ volatile int encoder0Pos = 0;
 // Flex Sensor
 const int flexPin = A1;      // Pin connected to voltage divider output
 const float VCC = 5;      // voltage at Ardunio 5V line
-const float R_DIV = 47000.0;  // resistor used to create a voltage divider  !!!!!!!!!!!!!!!
-const float flatResistance = 25000.0; // resistance when flat  !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-const float bendResistance = 100000.0;  // resistance at 90 deg  !!!!!!!!!!!!!!!!!!!!!!!!!!
+const float R_DIV = 33000.0;  // resistor used to create a voltage divider  !!!!!!!!!!!!!!!
+const float flatResistance = 33000.0; // resistance when flat  !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+const float bendResistance = 75000.0;  // resistance at 90 deg  !!!!!!!!!!!!!!!!!!!!!!!!!!
 
 // Ecran OLED
 #include <Adafruit_SSD1306.h>
@@ -124,7 +124,7 @@ void loop() {
   ecranOLED.println("Mesure");
   ecranOLED.display();                          // Transfert le buffer à l'écran
   delay(2000);
-  }
+  
 
   // Module Bluetooth //
     int i = 0; 
