@@ -7,6 +7,13 @@
 volatile int encoder0Pos = 0;
 volatile bool encoderChanged = false;
 
+//Bluetooth
+#include <SoftwareSerial.h>
+#define RX 8  // Broche RX du module Bluetooth
+#define TX 7  // Broche TX du module Bluetooth
+#define ADC A0  // Broche de lecture de la résistance
+SoftwareSerial bluetooth(TX, RX);  // Création d'un port série logiciel
+
 // Ecran OLED
 #include <Adafruit_SSD1306.h>
 #define nombreDePixelsEnLargeur 128         // Taille de l'écran OLED, en pixel, au niveau de sa largeur
@@ -14,7 +21,6 @@ volatile bool encoderChanged = false;
 #define brocheResetOLED         -1          // Reset de l'OLED partagé avec l'Arduino (d'où la valeur à -1, et non un numéro de pin)
 #define adresseI2CecranOLED     0x3C        // Adresse de "mon" écran OLED sur le bus i2c (généralement égal à 0x3C ou 0x3D)
 Adafruit_SSD1306 ecranOLED(nombreDePixelsEnLargeur, nombreDePixelsEnHauteur, &Wire, brocheResetOLED);
-
 
 void setup() {
   Serial.begin(9600);
@@ -33,17 +39,32 @@ void setup() {
   ecranOLED.setTextColor(SSD1306_WHITE); 
   ecranOLED.println("Config");
   ecranOLED.println("Mesure");
-  ecranOLED.display();                          // Transfert le buffer à l'écran
+  ecranOLED.display();
+  
+  //Bluetooth
+  bluetooth.begin(9600);  // Communication avec le module Bluetooth
+  Serial.println("Module Bluetooth prêt");                          // Transfert le buffer à l'écran
 }
 
 
-
-
 void loop() {
+  //Rotatif
   if (encoderChanged) {  // Si la valeur de l'encodeur a changé
     encoderChanged = false;
     afficherMenu();  // Afficher la nouvelle valeur
   }
+  //Bluetooth
+  int valeurBrute = analogRead(ADC);
+    float tension = (valeurBrute / 1023.0) * 5.0;  // Conversion en tension (0-5V)
+    Serial.print("Tension mesurée : ");
+    Serial.print(tension);
+    Serial.println(" V");
+
+    bluetooth.print("Tension: ");
+    bluetooth.print(tension);
+    bluetooth.println(" V");
+
+    delay(1000);  // Envoi toutes les secondes
 }
 
 
@@ -76,6 +97,8 @@ void doEncoder() {
   } 
   encoderChanged = true;
 }
+
+
 
 
 
