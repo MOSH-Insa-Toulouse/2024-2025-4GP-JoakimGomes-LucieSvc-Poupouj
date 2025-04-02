@@ -5,7 +5,6 @@
 #define encoder0PinB  4  //DT Output B
 #define Switch 5 // Switch connection if available
 volatile int encoder0Pos = 0;
-volatile int encoder0Pos = 0;
 volatile bool encoderChanged = false;
 
 // Ecran OLED
@@ -48,7 +47,7 @@ void loop() {
 }
 
 
-void afficherMenu(int encoder0Pos) {
+void afficherMenu() {
   Serial.println(encoder0Pos);
   ecranOLED.clearDisplay();
   ecranOLED.setTextSize(3);
@@ -72,10 +71,8 @@ void afficherMenu(int encoder0Pos) {
 void doEncoder() {
   if (digitalRead(encoder0PinA)==HIGH && digitalRead(encoder0PinB)==HIGH) {
     encoder0Pos--;
-    afficherMenu(encoder0Pos);
   } else if (digitalRead(encoder0PinA)==HIGH && digitalRead(encoder0PinB)==LOW) {
     encoder0Pos++;
-    afficherMenu(encoder0Pos);
   } 
   encoderChanged = true;
 }
