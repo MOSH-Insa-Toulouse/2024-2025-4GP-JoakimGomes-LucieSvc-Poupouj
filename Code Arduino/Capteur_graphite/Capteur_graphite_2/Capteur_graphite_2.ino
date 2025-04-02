@@ -56,7 +56,7 @@ void setup() {
     }
 
   // Ecran OLED 
-  if(!ecranOLED.begin(SSD1306_SWITCHCAPVCC, adresseI2CecranOLED))
+  if(!ecranOLED.begin(SSD1306_SWITCHCAPVCC, OLED_I2C_ADDR))
     while(1);
   // Arrêt du programme (boucle infinie) si échec d'initialisation
   ecranOLED.clearDisplay();
@@ -71,17 +71,6 @@ void setup() {
   Serial.println("Module Bluetooth prêt");                          // Transfert le buffer à l'écran
 }
 
-void loop() {
-  if (encoderChanged) {
-  //Rotatif
-  if (encoderChanged) {  // Si la valeur de l'encodeur a changé
-    encoderChanged = false;
-    afficherMenu();
-    afficherMenu();  // Afficher la nouvelle valeur
-  }
-
-  detecterAppuiBouton();
-}
 
 void detecterAppuiBouton() {
   bool buttonState = digitalRead(Switch);
@@ -125,6 +114,21 @@ void detecterAppuiBouton() {
 
     delay(1000);  // Envoi toutes les secondes
 }
+
+
+void loop() {
+  if (encoderChanged) {
+  //Rotatif
+  if (encoderChanged) {  // Si la valeur de l'encodeur a changé
+    encoderChanged = false;
+    afficherMenu();
+    afficherMenu();  // Afficher la nouvelle valeur
+  }
+
+  detecterAppuiBouton();
+}
+
+
 
 
 void afficherMenu() {
