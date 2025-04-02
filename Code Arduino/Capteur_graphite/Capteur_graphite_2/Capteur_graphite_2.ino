@@ -14,6 +14,11 @@ volatile bool encoderChanged = false;
 #define ADC A0  // Broche de lecture de la résistance
 SoftwareSerial bluetooth(TX, RX);  // Création d'un port série logiciel
 
+//FlexSensor
+#define FLEX_SENSOR_PIN A1
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+
 // Ecran OLED
 #include <Adafruit_SSD1306.h>
 #define nombreDePixelsEnLargeur 128         // Taille de l'écran OLED, en pixel, au niveau de sa largeur
@@ -29,9 +34,17 @@ void setup() {
   pinMode(encoder0PinA, INPUT); 
   pinMode(encoder0PinB, INPUT); 
   attachInterrupt(digitalPinToInterrupt(encoder0PinA), doEncoder, CHANGE);
+
+  //Flexsensor
+  if (!ecranOLED.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Adresse I2C : 0x3C
+        Serial.println("Échec de l'initialisation de l'écran OLED");
+        for (;;);
+    }
+
   // Ecran OLED 
   if(!ecranOLED.begin(SSD1306_SWITCHCAPVCC, adresseI2CecranOLED))
-    while(1);                               // Arrêt du programme (boucle infinie) si échec d'initialisation
+    while(1);
+  // Arrêt du programme (boucle infinie) si échec d'initialisation
   ecranOLED.clearDisplay();
   ecranOLED.setTextSize(3);                   // Taille des caractères (2:1)
   ecranOLED.setTextColor(SSD1306_WHITE); 
@@ -53,14 +66,24 @@ void loop() {
   }
   //Bluetooth
   int valeurBrute = analogRead(ADC);
-    float tension = (valeurBrute / 1023.0) * 5.0;  // Conversion en tension (0-5V)
+    float tension = (valeurBrute / 1024.0) * 5.0;  // Conversion en tension (0-5V)
     Serial.print("Tension mesurée : ");
     Serial.print(tension);
     Serial.println(" V");
 
-    bluetooth.print("Tension: ");
+    //bluetooth.print("Tension: ");
     bluetooth.print(tension);
-    bluetooth.println(" V");
+    //bluetooth.println(" V");
+
+    //FlexSensor
+    int VFlexbrute = analogRead(FLEX_SENSOR_PIN);
+    float VFlexSensor = (VFlexbrute / 1024.0) * 5.0; // Conversion en tension
+
+    Serial.print("Valeur brute : ");
+    Serial.print(VFlexbrute);
+    Serial.print(" | Tension : ");
+    Serial.print(VFlexSensor);
+    Serial.println(" V");
 
     delay(1000);  // Envoi toutes les secondes
 }
