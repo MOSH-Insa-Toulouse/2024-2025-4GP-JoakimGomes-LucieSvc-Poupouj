@@ -18,7 +18,7 @@ const float bendResistance = 75000.0;  // resistance at 90 deg  !!!!!!!!!!!!!!!!
 #define nombreDePixelsEnLargeur 128         // Taille de l'écran OLED, en pixel, au niveau de sa largeur
 #define nombreDePixelsEnHauteur 64          // Taille de l'écran OLED, en pixel, au niveau de sa hauteur
 #define brocheResetOLED         -1          // Reset de l'OLED partagé avec l'Arduino (d'où la valeur à -1, et non un numéro de pin)
-#define adresseI2CecranOLED     0x3C        // Adresse de "mon" écran OLED sur le bus i2c (généralement égal à 0x3C ou 0x3D) !!!!!!!!!!!!!!!!!!!!!!!!!!
+#define adresseI2CecranOLED     0x3C        // Adresse de "mon" écran OLED sur le bus i2c (généralement égal à 0x3C ou 0x3D)
 Adafruit_SSD1306 ecranOLED(nombreDePixelsEnLargeur, nombreDePixelsEnHauteur, &Wire, brocheResetOLED);
 
 // Module Bluetooth
@@ -41,7 +41,7 @@ const byte pot0Shutdown    = 0x21;    // pot0 shutdown // B 0010 0001
 
 
 
-// Pour le potentiom_tre Digital mais j'ai pas compris ce que ça fait et si ça nous est utile !!!!!!!!!!!!!!!!!!!
+// Pour le potentiomètre Digital mais j'ai pas compris ce que ça fait et si ça nous est utile !!!!!!!!!!!!!!!!!!!
 void setPotWiper(int addr, int pos) {
   pos = constrain(pos, 0, 255);            // limit wiper setting to range of 0 to 255
   digitalWrite(csPin, LOW);                // select chip
@@ -65,10 +65,8 @@ void setup() {
   // Encodeur Rotatoire
   pinMode(encoder0PinA, INPUT); 
   digitalWrite(encoder0PinA, HIGH);       // turn on pullup resistor
-
   pinMode(encoder0PinB, INPUT); 
   digitalWrite(encoder0PinB, HIGH);       // turn on pullup resistor
-
   attachInterrupt(0, doEncoder, RISING); // encoder pin on interrupt 0 - pin2
 
   // Flex Sensor
@@ -117,17 +115,16 @@ void loop() {
 
 
   // Ecran OLED //
-  for(byte tailleDeCaractere=1; tailleDeCaractere <=3; tailleDeCaractere++) {
-    boolean bCouleurInverse = false;
-    ecranOLED.clearDisplay();                                   // Effaçage de l'intégralité du buffer
-    ecranOLED.setTextSize(tailleDeCaractere);                   // Taille des caractères (1:1, puis 2:1, puis 3:1)
-    ecranOLED.setCursor(0, 0);                                  // Déplacement du curseur en position (0,0), c'est à dire dans l'angle supérieur gauche
-    ecranOLED.setTextColor(SSD1306_WHITE); 
-    ecranOLED.print("Ligne ");
-    ecranOLED.println(numeroDeLigne);
-    ecranOLED.display();                            // Transfert le buffer à l'écran
-    delay(2000);
-  }
+  boolean bCouleurInverse = false;
+  ecranOLED.clearDisplay();                     // Effaçage de l'intégralité du buffer
+  ecranOLED.setTextSize(2:1);                   // Taille des caractères (2:1)
+  ecranOLED.setCursor(0, 0);                    // Déplacement du curseur en position (0,0), c'est à dire dans l'angle supérieur gauche
+  ecranOLED.setTextColor(SSD1306_WHITE); 
+  ecranOLED.println("Configuration");
+  ecranOLED.println("Mesure");
+  ecranOLED.display();                          // Transfert le buffer à l'écran
+  delay(2000);
+  
 
   // Module Bluetooth //
     int i = 0; 
@@ -156,6 +153,28 @@ void doEncoder() {
     encoder0Pos++;
   } else if (digitalRead(encoder0PinA)==HIGH && digitalRead(encoder0PinB)==LOW) {
     encoder0Pos--;
-  }
-  
+  }  
 }
+
+
+
+
+
+Serial.println(encoder0Pos);
+  if (encoder0Pos%2 == 0) {
+    ecranOLED.clearDisplay();
+    ecranOLED.setTextSize(3);
+    ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
+    ecranOLED.println("Config");
+    ecranOLED.setTextColor(SSD1306_WHITE, SSD1306_BLACK); 
+    ecranOLED.println("Mesure");
+    ecranOLED.display(); 
+  } else if (encoder0Pos%2 == 1) {
+    ecranOLED.clearDisplay();
+    ecranOLED.setTextSize(3);
+    ecranOLED.setTextColor(SSD1306_WHITE, SSD1306_BLACK);
+    ecranOLED.println("Config");
+    ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE); 
+    ecranOLED.println("Mesure");
+    ecranOLED.display(); 
+  }
