@@ -15,25 +15,17 @@ volatile bool encoderChanged = false;
 #define adresseI2CecranOLED     0x3C        // Adresse de "mon" écran OLED sur le bus i2c (généralement égal à 0x3C ou 0x3D)
 Adafruit_SSD1306 ecranOLED(nombreDePixelsEnLargeur, nombreDePixelsEnHauteur, &Wire, brocheResetOLED);
 
-
 void setup() {
   Serial.begin(9600);
+
   // Encodeur Rotatoire
   pinMode(encoder0PinA, INPUT); 
-  digitalWrite(encoder0PinA, HIGH);       // turn on pullup resistor
   pinMode(encoder0PinB, INPUT); 
-  digitalWrite(encoder0PinB, HIGH);       // turn on pullup resistor
-  attachInterrupt(0, doEncoder, RISING); // encoder pin on interrupt 0 - pin2
-
+  attachInterrupt(digitalPinToInterrupt(encoder0PinA), doEncoder, CHANGE);
   // Ecran OLED 
   if(!ecranOLED.begin(SSD1306_SWITCHCAPVCC, adresseI2CecranOLED))
     while(1);                               // Arrêt du programme (boucle infinie) si échec d'initialisation
-  ecranOLED.clearDisplay();
-  ecranOLED.setTextSize(3);                   // Taille des caractères (2:1)
-  ecranOLED.setTextColor(SSD1306_WHITE); 
-  ecranOLED.println("Config");
-  ecranOLED.println("Mesure");
-  ecranOLED.display();                          // Transfert le buffer à l'écran
+  afficherMenu(); 
 }
 
 
@@ -42,28 +34,30 @@ void setup() {
 void loop() {
   if (encoderChanged) {  // Si la valeur de l'encodeur a changé
     encoderChanged = false;
-    afficherMenu();  // Afficher la nouvelle valeur
+   afficherMenu();
   }
 }
 
 
 void afficherMenu() {
-  Serial.println(encoder0Pos);
   ecranOLED.clearDisplay();
   ecranOLED.setTextSize(3);
   if (encoder0Pos % 2 == 0) {
       ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
+      ecranOLED.setCursor(20, 10); 
       ecranOLED.println("Config");
       ecranOLED.setTextColor(SSD1306_WHITE, SSD1306_BLACK);
+      ecranOLED.setCursor(20, 40); 
       ecranOLED.println("Mesure");
   } else {
       ecranOLED.setTextColor(SSD1306_WHITE, SSD1306_BLACK);
+      ecranOLED.setCursor(20, 10); 
       ecranOLED.println("Config");
       ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
+      ecranOLED.setCursor(20, 40); 
       ecranOLED.println("Mesure");
     }
     ecranOLED.display();
-    encoderChanged = false;
 }
 
 
@@ -75,6 +69,7 @@ void doEncoder() {
     encoder0Pos++;
   } 
   encoderChanged = true;
+  Serial.println(encoder0Pos);
 }
 
 
