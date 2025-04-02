@@ -37,9 +37,8 @@ void setup() {
 }
 
 
-
-
 void loop() {
+  doEncoder();
   if (encoderChanged) {  // Si la valeur de l'encodeur a changé
     encoderChanged = false;
     afficherMenu();  // Afficher la nouvelle valeur
