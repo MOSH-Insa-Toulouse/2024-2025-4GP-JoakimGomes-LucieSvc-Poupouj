@@ -9,9 +9,9 @@ volatile int encoder0Pos = 0;
 // Flex Sensor
 const int flexPin = A1;      // Pin connected to voltage divider output
 const float VCC = 5;      // voltage at Ardunio 5V line
-const float R_DIV = 47000.0;  // resistor used to create a voltage divider  !!!!!!!!!!!!!!!
-const float flatResistance = 25000.0; // resistance when flat  !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-const float bendResistance = 100000.0;  // resistance at 90 deg  !!!!!!!!!!!!!!!!!!!!!!!!!!
+const float R_DIV = 33000.0;  // resistor used to create a voltage divider  !!!!!!!!!!!!!!!
+const float flatResistance = 33000.0; // resistance when flat  !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+const float bendResistance = 75000.0;  // resistance at 90 deg  !!!!!!!!!!!!!!!!!!!!!!!!!!
 
 // Ecran OLED
 #include <Adafruit_SSD1306.h>
@@ -41,7 +41,7 @@ const byte pot0Shutdown    = 0x21;    // pot0 shutdown // B 0010 0001
 
 
 
-// Pour le potentiom_tre Digital mais j'ai pas compris ce que ça fait et si ça nous ait utile !!!!!!!!!!!!!!!!!!!
+// Pour le potentiom_tre Digital mais j'ai pas compris ce que ça fait et si ça nous est utile !!!!!!!!!!!!!!!!!!!
 void setPotWiper(int addr, int pos) {
   pos = constrain(pos, 0, 255);            // limit wiper setting to range of 0 to 255
   digitalWrite(csPin, LOW);                // select chip
