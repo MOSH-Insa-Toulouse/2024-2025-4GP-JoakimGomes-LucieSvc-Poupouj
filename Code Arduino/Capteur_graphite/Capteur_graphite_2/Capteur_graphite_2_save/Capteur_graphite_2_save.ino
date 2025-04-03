@@ -221,9 +221,9 @@ void changerMenu() {
 
 void doEncoder() {
   if (digitalRead(encoder0PinA) == HIGH && digitalRead(encoder0PinB) == HIGH) {
-    selection = (selection + 1) % 3;
+    selection = (selection - 1) % 3;
   } else if (digitalRead(encoder0PinA) == HIGH && digitalRead(encoder0PinB) == LOW) {
-    selection = (selection - 1 + 3) % 3;
+    selection = (selection + 1 + 3) % 3;
   }
 
   encoderChanged = true;
