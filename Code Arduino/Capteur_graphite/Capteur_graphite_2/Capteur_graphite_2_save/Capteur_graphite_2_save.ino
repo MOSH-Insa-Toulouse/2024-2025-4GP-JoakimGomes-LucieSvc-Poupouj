@@ -147,6 +147,12 @@ void afficherMenu() {
     afficherOption("Graphite", 0);
     afficherOption("Flex", 1);
     afficherOption("Retour", 2);
+  } else if (menuState == 3) {  // Menu du capteur Flex
+    afficherOption("Mesurer", 0);
+    afficherOption("Retour", 1);
+  } else if (menuState == 4) {  // Menu du capteur Graphite
+    afficherOption("Mesurer", 0);
+    afficherOption("Retour", 1);
   }
 
   ecranOLED.display();
@@ -163,59 +169,68 @@ void afficherOption(const char *texte, int position) {
 }
 
 void afficherValeurFlex() {
-  ecranOLED.clearDisplay();
-  ecranOLED.setTextSize(1);
-  ecranOLED.setTextColor(SSD1306_WHITE);
+  while (menuState == 3) {  // Reste dans cette boucle tant que l'utilisateur ne sort pas
+    ecranOLED.clearDisplay();
+    ecranOLED.setTextSize(1);
+    ecranOLED.setTextColor(SSD1306_WHITE);
 
-  int VFlexbrute = analogRead(FLEX_SENSOR_PIN);
-  float VFlexSensor = (VFlexbrute / 1024.0) * 5.0; // Conversion en tension
-  float RFlexSensor = R_DIV * (5.0 / VFlexSensor - 1.0);
+    int VFlexbrute = analogRead(FLEX_SENSOR_PIN);
+    float VFlexSensor = (VFlexbrute / 1024.0) * 5.0; // Conversion en tension
+    float RFlexSensor = R_DIV * (5.0 / VFlexSensor - 1.0);
+    float angle = map(RFlexSensor, flatresistance, bendresistance, 0, 90.0);
 
-  float angle = map(RFlexSensor, flatresistance, bendresistance, 0, 90.0);
+    ecranOLED.setCursor(10, 0);
+    ecranOLED.println("Flex Sensor:");
 
-  ecranOLED.setCursor(10, 0);
-  ecranOLED.println("Flex Sensor:");
+    ecranOLED.setCursor(10, 20);
+    ecranOLED.print(VFlexSensor);
+    ecranOLED.println(" V");
 
-  ecranOLED.setCursor(10, 20);
-  ecranOLED.print(VFlexSensor);
-  ecranOLED.println(" V");
+    ecranOLED.setCursor(10, 30);
+    ecranOLED.print(RFlexSensor);
+    ecranOLED.println(" Ohms");
 
-  ecranOLED.setCursor(10, 30);
-  ecranOLED.print(RFlexSensor);
-  ecranOLED.println(" Ohms");
+    ecranOLED.setCursor(10, 40);
+    ecranOLED.print(angle);
+    ecranOLED.println(" degrees");
 
-  ecranOLED.setCursor(10, 40);
-  ecranOLED.print(angle);
-  ecranOLED.println(" degrees");
+    ecranOLED.setCursor(10, 50);
+    ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
+    ecranOLED.println("Retour");
 
-  ecranOLED.setCursor(10, 50);
-  ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
-  ecranOLED.println("Retour");
+    ecranOLED.display();
 
-  ecranOLED.display();
+    detecterAppuiBouton();  // Vérifie si l'utilisateur appuie sur "Retour"
+    delay(200);  // Petite pause pour éviter les rafraîchissements trop rapides
+  }
 }
 
 void afficherValeurGraphite(float Rpot) {
-  ecranOLED.clearDisplay();
-  ecranOLED.setTextSize(1);
-  ecranOLED.setTextColor(SSD1306_WHITE);
+  while (menuState == 4) {  // Reste dans cette boucle tant que l'utilisateur ne sort pas
+    ecranOLED.clearDisplay();
+    ecranOLED.setTextSize(1);
+    ecranOLED.setTextColor(SSD1306_WHITE);
 
-  int VGraphiteBrute = analogRead(GRAPHITE_SENSOR_PIN);
-  float VGraphiteSensor = (VGraphiteBrute / 1024.0) * 5.0; // Conversion en tension
-  float RGraphiteSensor = (1 + R5 / Rpot) * R1 * (5.0/VGraphiteSensor) - R1 - R5;
+    int VGraphiteBrute = analogRead(GRAPHITE_SENSOR_PIN);
+    float VGraphiteSensor = (VGraphiteBrute / 1024.0) * 5.0; // Conversion en tension
+    float RGraphiteSensor = (1 + R5 / Rpot) * R1 * (5.0/VGraphiteSensor) - R1 - R5;
 
-  ecranOLED.setCursor(10, 0);
-  ecranOLED.println("Graphite Sensor:");
+    ecranOLED.setCursor(10, 0);
+    ecranOLED.println("Graphite Sensor:");
 
-  ecranOLED.setCursor(10, 30);
-  ecranOLED.print(RGraphiteSensor);
-  ecranOLED.println(" Ohms");
+    ecranOLED.setCursor(10, 30);
+    ecranOLED.print(RGraphiteSensor);
+    ecranOLED.println(" Ohms");
 
-  ecranOLED.setCursor(10, 50);
-  ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
-  ecranOLED.println("Retour");
+    ecranOLED.setCursor(10, 50);
+    ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
+    ecranOLED.println("Retour");
 
-  ecranOLED.display();
+    ecranOLED.display();
+
+    detecterAppuiBouton();  // Vérifie si l'utilisateur appuie sur "Retour"
+    delay(200);  // Petite pause pour éviter les rafraîchissements trop rapides
+  }
 }
 
 void changerMenu() {
@@ -230,30 +245,30 @@ void changerMenu() {
       menuState = 4;  // Aller au menu du capteur Graphite
     }
   } else if (menuState == 3) {  // Menu du capteur Flex
-    if (selection == 0) {
-      afficherValeurFlex();  // Affichage en direct de la valeur Flex
-      delay(1000);
-    } else if (selection == 1) {
+    if (selection == 1) {  // Si "Retour" est sélectionné
       menuState = 2;  // Retour au menu "Mesure"
+    } else {
+      afficherValeurFlex();
     }
   } else if (menuState == 4) {  // Menu du capteur Graphite
-    if (selection == 0) {
-      afficherValeurGraphite(40000.0);  // Affichage en direct de la valeur Graphite
-      delay(1000);
-    } else if (selection == 1) {
+    if (selection == 1) {  // Si "Retour" est sélectionné
       menuState = 2;  // Retour au menu "Mesure"
+    } else {
+      afficherValeurGraphite(40000.0);
     }
   }
-  
+
   selection = 0;  // Réinitialiser la sélection
   afficherMenu();
 }
 
 void doEncoder() {
+  int maxOptions = (menuState == 1 || menuState == 2) ? 3 : 2;  // 3 options pour Config/Mesure, 2 pour Flex/Graphite
+
   if (digitalRead(encoder0PinA) == HIGH && digitalRead(encoder0PinB) == HIGH) {
-    selection = (selection + 1) % 3;
+    selection = (selection + 1) % maxOptions;
   } else if (digitalRead(encoder0PinA) == HIGH && digitalRead(encoder0PinB) == LOW) {
-    selection = (selection - 1 + 3) % 3;
+    selection = (selection - 1 + maxOptions) % maxOptions;
   }
 
   encoderChanged = true;
