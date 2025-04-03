@@ -16,7 +16,7 @@ Adafruit_SSD1306 ecranOLED(OLED_WIDTH, OLED_HEIGHT, &Wire, OLED_RESET);
 volatile int encoder0Pos = 0;
 volatile bool encoderChanged = false;
 
-int menuState = 0;  // 0 = Menu principal, 1 = Config, 2 = Mesure
+int menuState = 0;  // 0 = Menu principal, 1 = Config, 2 = Mesure, 3 = Flex, 4 = Graphite
 int selection = 0;  // Position de sélection (0, 1 ou 2)
 
 bool lastButtonState = HIGH;
@@ -31,8 +31,20 @@ SoftwareSerial bluetooth(TX, RX);  // Création d'un port série logiciel
 
 //FlexSensor
 #define FLEX_SENSOR_PIN A1
+#define GRAPHITE_SENSOR_PIN A0
 #include <Wire.h>
 #include <Adafruit_GFX.h>
+
+const float R_DIV = 47000.0;
+const float flatresistance = 25000.0;
+const float bendresistance = 100000.0;
+
+const float R5 = 10000.0;
+const float R1 = 100000.0;
+
+
+// === Déclaration de la fonction avant setup ===
+void doEncoder();
 
 void setup() {
   Serial.begin(9600);
@@ -49,9 +61,6 @@ void setup() {
 
   afficherMenu();
 
-  //Bluetooth
-  bluetooth.begin(9600);  // Communication avec le module Bluetooth
-  Serial.println("Module Bluetooth prêt");      
 }
 
 void loop() {
@@ -62,26 +71,15 @@ void loop() {
 
   detecterAppuiBouton();
 
-  //Bluetooth
-  int valeurBrute = analogRead(ADC);
-  float tension = (valeurBrute / 1024.0) * 5.0;  // Conversion en tension (0-5V)
-  Serial.print("Tension mesurée : ");
-  Serial.print(tension);
-  Serial.println(" V");
+  // Mise à jour de l'affichage des mesures Flex en temps réel
+  if (menuState == 3) {
+    afficherValeurFlex();
+  }
 
-  //bluetooth.print("Tension: ");
-  bluetooth.print(tension);
-  //bluetooth.println(" V");
+  if (menuState == 4) {
+    afficherValeurGraphite(40000.0);
+  }
 
-  //FlexSensor
-  int VFlexbrute = analogRead(FLEX_SENSOR_PIN);
-  float VFlexSensor = (VFlexbrute / 1024.0) * 5.0; // Conversion en tension
-
-  Serial.print("Valeur brute : ");
-  Serial.print(VFlexbrute);
-  Serial.print(" | Tension : ");
-  Serial.print(VFlexSensor);
-  Serial.println(" V");
 }
 
 void detecterAppuiBouton() {
@@ -134,15 +132,89 @@ void afficherOption(const char *texte, int position) {
   ecranOLED.println(texte);
 }
 
+void afficherValeurFlex() {
+  ecranOLED.clearDisplay();
+  ecranOLED.setTextSize(1);
+  ecranOLED.setTextColor(SSD1306_WHITE);
+
+  int VFlexbrute = analogRead(FLEX_SENSOR_PIN);
+  float VFlexSensor = (VFlexbrute / 1024.0) * 5.0; // Conversion en tension
+  float RFlexSensor = R_DIV * (5.0 / VFlexSensor - 1.0);
+
+  float angle = map(RFlexSensor, flatresistance, bendresistance, 0, 90.0);
+
+  ecranOLED.setCursor(10, 0);
+  ecranOLED.println("Flex Sensor:");
+
+  ecranOLED.setCursor(10, 20);
+  ecranOLED.print(VFlexSensor);
+  ecranOLED.println(" V");
+
+  ecranOLED.setCursor(10, 30);
+  ecranOLED.print(RFlexSensor);
+  ecranOLED.println(" Ohms");
+
+  ecranOLED.setCursor(10, 40);
+  ecranOLED.print(angle);
+  ecranOLED.println(" degrees");
+
+  ecranOLED.setCursor(10, 50);
+  ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
+  ecranOLED.println("Retour");
+
+  ecranOLED.display();
+}
+
+void afficherValeurGraphite(float Rpot) {
+  ecranOLED.clearDisplay();
+  ecranOLED.setTextSize(1);
+  ecranOLED.setTextColor(SSD1306_WHITE);
+
+  int VGraphiteBrute = analogRead(GRAPHITE_SENSOR_PIN);
+  float VGraphiteSensor = (VGraphiteBrute / 1024.0) * 5.0; // Conversion en tension
+  float RGraphiteSensor = (1 + R5 / Rpot) * R1 * (5.0/VGraphiteSensor) - R1 - R5;
+
+  ecranOLED.setCursor(10, 0);
+  ecranOLED.println("Graphite Sensor:");
+
+  ecranOLED.setCursor(10, 30);
+  ecranOLED.print(RGraphiteSensor);
+  ecranOLED.println(" Ohms");
+
+  ecranOLED.setCursor(10, 50);
+  ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
+  ecranOLED.println("Retour");
+
+  ecranOLED.display();
+}
+
 void changerMenu() {
   if (menuState == 0) {  // Menu principal
     menuState = (selection == 0) ? 1 : 2;
-  } else {  // Sous-menus
+  } else if (menuState == 1 || menuState == 2) {  // Sous-menus Config / Mesure
     if (selection == 2) {
       menuState = 0;  // Retour au menu principal
+    } else if (menuState == 2 && selection == 1) {
+      menuState = 3;  // Aller au menu du capteur Flex
+    } else if (menuState == 2 && selection == 0) {
+      menuState = 4;  // Aller au menu du capteur Graphite
+    }
+  } else if (menuState == 3) {  // Menu du capteur Flex
+    if (selection == 0) {
+      afficherValeurFlex();  // Affichage en direct de la valeur Flex
+      delay(1000);
+    } else if (selection == 1) {
+      menuState = 2;  // Retour au menu "Mesure"
+    }
+  } else if (menuState == 4) {  // Menu du capteur Graphite
+    if (selection == 0) {
+      afficherValeurGraphite(40000.0);  // Affichage en direct de la valeur Graphite
+      delay(1000);
+    } else if (selection == 1) {
+      menuState = 2;  // Retour au menu "Mesure"
     }
   }
-
+  
   selection = 0;  // Réinitialiser la sélection
   afficherMenu();
 }
