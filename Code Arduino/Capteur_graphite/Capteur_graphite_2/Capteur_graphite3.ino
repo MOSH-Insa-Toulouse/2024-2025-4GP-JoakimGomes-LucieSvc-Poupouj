@@ -16,6 +16,12 @@ Adafruit_SSD1306 ecranOLED(OLED_WIDTH, OLED_HEIGHT, &Wire, OLED_RESET);
 volatile int encoder0Pos = 0;
 volatile bool encoderChanged = false;
 
+int menuState = 0;  // 0 = Menu principal, 1 = Config, 2 = Mesure
+int selection = 0;  // Position de sélection (0, 1 ou 2)
+
+bool lastButtonState = HIGH;
+bool buttonPressed = false;
+
 //Bluetooth
 #include <SoftwareSerial.h>
 #define RX 8  // Broche RX du module Bluetooth
@@ -27,12 +33,6 @@ SoftwareSerial bluetooth(TX, RX);  // Création d'un port série logiciel
 #define FLEX_SENSOR_PIN A1
 #include <Wire.h>
 #include <Adafruit_GFX.h>
-
-int menuState = 0;  // 0 = Menu principal, 1 = Config, 2 = Mesure
-int selection = 0;  // Position de sélection (0, 1 ou 2)
-
-bool lastButtonState = HIGH;
-bool buttonPressed = false;
 
 void setup() {
   Serial.begin(9600);
@@ -49,6 +49,7 @@ void setup() {
 
   afficherMenu();
 
+<<<<<<< HEAD:Code Arduino/Capteur_graphite/Capteur_graphite_2/Capteur_graphite_2.ino
   //Flexsensor
   if (!ecranOLED.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Adresse I2C : 0x3C
         Serial.println("Échec de l'initialisation de l'écran OLED");
@@ -66,11 +67,45 @@ void setup() {
   ecranOLED.println("Mesure");
   ecranOLED.display();
   
+=======
+>>>>>>> 36da538ddb2458cd6bcdd9a603444d4445305723:Code Arduino/Capteur_graphite/Capteur_graphite_2/Capteur_graphite3.ino
   //Bluetooth
   bluetooth.begin(9600);  // Communication avec le module Bluetooth
-  Serial.println("Module Bluetooth prêt");                          // Transfert le buffer à l'écran
+  Serial.println("Module Bluetooth prêt");      
 }
 
+<<<<<<< HEAD:Code Arduino/Capteur_graphite/Capteur_graphite_2/Capteur_graphite_2.ino
+=======
+void loop() {
+  if (encoderChanged) {
+    encoderChanged = false;
+    afficherMenu();
+  }
+
+  detecterAppuiBouton();
+
+  //Bluetooth
+  int valeurBrute = analogRead(ADC);
+  float tension = (valeurBrute / 1024.0) * 5.0;  // Conversion en tension (0-5V)
+  Serial.print("Tension mesurée : ");
+  Serial.print(tension);
+  Serial.println(" V");
+
+  //bluetooth.print("Tension: ");
+  bluetooth.print(tension);
+  //bluetooth.println(" V");
+
+  //FlexSensor
+  int VFlexbrute = analogRead(FLEX_SENSOR_PIN);
+  float VFlexSensor = (VFlexbrute / 1024.0) * 5.0; // Conversion en tension
+
+  Serial.print("Valeur brute : ");
+  Serial.print(VFlexbrute);
+  Serial.print(" | Tension : ");
+  Serial.print(VFlexSensor);
+  Serial.println(" V");
+}
+>>>>>>> 36da538ddb2458cd6bcdd9a603444d4445305723:Code Arduino/Capteur_graphite/Capteur_graphite_2/Capteur_graphite3.ino
 
 void detecterAppuiBouton() {
   bool buttonState = digitalRead(Switch);
@@ -91,30 +126,6 @@ void detecterAppuiBouton() {
 
   lastButtonState = buttonState;
 }
-  //Bluetooth
-  int valeurBrute = analogRead(ADC);
-    float tension = (valeurBrute / 1024.0) * 5.0;  // Conversion en tension (0-5V)
-    Serial.print("Tension mesurée : ");
-    Serial.print(tension);
-    Serial.println(" V");
-
-    //bluetooth.print("Tension: ");
-    bluetooth.print(tension);
-    //bluetooth.println(" V");
-
-    //FlexSensor
-    int VFlexbrute = analogRead(FLEX_SENSOR_PIN);
-    float VFlexSensor = (VFlexbrute / 1024.0) * 5.0; // Conversion en tension
-
-    Serial.print("Valeur brute : ");
-    Serial.print(VFlexbrute);
-    Serial.print(" | Tension : ");
-    Serial.print(VFlexSensor);
-    Serial.println(" V");
-
-    delay(1000);  // Envoi toutes les secondes
-}
-
 
 void loop() {
   if (encoderChanged) {
