@@ -42,8 +42,31 @@ const float flatresistance = 33000.0;
 const float bendresistance = 75000.0;
 
 const float R5 = 10000.0;
+const float R3 = 10000.0;
+const float R2 = 1000.0;
 const float R1 = 100000.0;
 
+
+// Potentiomètre digital
+#include <SPI.h>
+// Note: command byte format xxCCxxPP, CC command, PP pot number (01 if selected) 
+#define MCP_NOP 0b00000000
+#define MCP_WRITE 0b00010001
+#define MCP_SHTDWN 0b00100001
+const int ssMCPin = 10; // Define the slave select for the digital pot
+
+void SPIWrite(uint8_t cmd, uint8_t data, uint8_t ssPin) // SPI write the command and data to the MCP IC connected to the ssPin
+{
+  SPI.beginTransaction(SPISettings(14000000, MSBFIRST, SPI_MODE0)); //https://www.arduino.cc/en/Reference/SPISettings
+  
+  digitalWrite(ssPin, LOW); // SS pin low to select chip
+  
+  SPI.transfer(cmd);        // Send command code
+  SPI.transfer(data);       // Send associated value
+  
+  digitalWrite(ssPin, HIGH);// SS pin high to de-select chip
+  SPI.endTransaction();
+}
 
 // === Déclaration de la fonction avant setup ===
 void doEncoder();
@@ -70,9 +93,20 @@ void setup() {
   bluetooth.begin(9600);  // Communication avec le module Bluetooth
   Serial.println("Module Bluetooth prêt");                          
 
+
+  // Pot digital
+  pinMode (ssMCPin, OUTPUT); //select pin output
+  digitalWrite(ssMCPin, HIGH); //SPI chip disabled
+  SPI.begin(); 
 }
 
 void loop() {
+  // Pot Digital
+  SPIWrite(MCP_WRITE, 255/50, ssMCPin);
+
+
+
+
   if (encoderChanged) {
     encoderChanged = false;
     afficherMenu();
@@ -91,10 +125,11 @@ void loop() {
 
   //Bluetooth
   int valeurBrute = analogRead(ADC);
-  float tension = (valeurBrute / 1024.0) * 5.0;  // Conversion en tension (0-5V)
-  Serial.print("Tension mesurée : ");
-  Serial.print(valeurBrute);
-  Serial.println(" V");
+  float Vadc = (4*valeurBrute / 1024.0) * 5.0;  // Conversion en tension (0-5V)
+  int Rcapteur= ((1 + R3/R2 ) * R1 * (5.0/Vadc)) - (R5-R1);
+  Serial.print("Resistance mesurée : ");
+  Serial.print(Rcapteur);
+  Serial.println(" Ohms");
 
     /* bluetooth.print("Tension: ");
     bluetooth.write(valeurBrute);
@@ -104,9 +139,10 @@ void loop() {
   uint8_t ValeurResBitAppli;
   uint8_t ValeurResBit;
   ValeurResBit=analogRead(ADC);
-  ValeurResBitAppli=valeurBrute/4;
-  Serial.println(ValeurResBitAppli); // Test pour vérifier la valeur mesurer à la sortie de A0 en cass de problèmes avec l'appli; ligne à vocation uniquement utilitaire pour le programmeur
-  bluetooth.write(ValeurResBitAppli);
+  //ValeurResBitAppli=valeurBrute/4;
+  uint8_t RcapteurBit= ((1 + R3/R2 ) * R1 * (5.0/ValeurResBit)) - (R5-R1);
+  Serial.println(RcapteurBit); // Test pour vérifier la valeur mesurer à la sortie de A0 en cass de problèmes avec l'appli; ligne à vocation uniquement utilitaire pour le programmeur
+  bluetooth.write(RcapteurBit);
 
   delay(1000);  // Envoi toutes les secondes
 
