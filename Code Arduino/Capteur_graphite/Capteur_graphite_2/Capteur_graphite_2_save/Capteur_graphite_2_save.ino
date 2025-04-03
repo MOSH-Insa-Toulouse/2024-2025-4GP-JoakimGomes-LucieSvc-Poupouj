@@ -22,12 +22,14 @@ int selection = 0;  // Position de sélection (0, 1 ou 2)
 bool lastButtonState = HIGH;
 bool buttonPressed = false;
 
+uint8_t ValeurResbitAppli;
+
 //Bluetooth
 #include <SoftwareSerial.h>
 #define RX 8  // Broche RX du module Bluetooth
 #define TX 7  // Broche TX du module Bluetooth
 #define ADC A0  // Broche de lecture de la résistance
-SoftwareSerial bluetooth(TX, RX);  // Création d'un port série logiciel
+SoftwareSerial bluetooth(RX, TX);  // Création d'un port série logiciel
 
 //FlexSensor
 #define FLEX_SENSOR_PIN A1
@@ -35,9 +37,9 @@ SoftwareSerial bluetooth(TX, RX);  // Création d'un port série logiciel
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 
-const float R_DIV = 47000.0;
-const float flatresistance = 25000.0;
-const float bendresistance = 100000.0;
+const float R_DIV = 33000.0;
+const float flatresistance = 33000.0;
+const float bendresistance = 75000.0;
 
 const float R5 = 10000.0;
 const float R1 = 100000.0;
@@ -61,6 +63,13 @@ void setup() {
 
   afficherMenu();
 
+  //Bluetooth
+  pinMode(RX,INPUT); // On définit le pin Rx en INPUT
+  pinMode(TX,OUTPUT); // On définit le pin Tx en OUTPUT
+  pinMode(ADC,INPUT); // On définit l'entrée analogique A0 en INPUT, c'est celle qui va recevoir les valeurs de la résistance du capteur graphite
+  bluetooth.begin(9600);  // Communication avec le module Bluetooth
+  Serial.println("Module Bluetooth prêt");                          
+
 }
 
 void loop() {
@@ -79,6 +88,27 @@ void loop() {
   if (menuState == 4) {
     afficherValeurGraphite(40000.0);
   }
+
+  //Bluetooth
+  int valeurBrute = analogRead(ADC);
+  float tension = (valeurBrute / 1024.0) * 5.0;  // Conversion en tension (0-5V)
+  Serial.print("Tension mesurée : ");
+  Serial.print(valeurBrute);
+  Serial.println(" V");
+
+    /* bluetooth.print("Tension: ");
+    bluetooth.write(valeurBrute);
+    bluetooth.print(tension);
+    bluetooth.println(" V"); */
+
+  uint8_t ValeurResBitAppli;
+  uint8_t ValeurResBit;
+  ValeurResBit=analogRead(ADC);
+  ValeurResBitAppli=valeurBrute/4;
+  Serial.println(ValeurResBitAppli); // Test pour vérifier la valeur mesurer à la sortie de A0 en cass de problèmes avec l'appli; ligne à vocation uniquement utilitaire pour le programmeur
+  bluetooth.write(ValeurResBitAppli);
+
+  delay(1000);  // Envoi toutes les secondes
 
 }
 
