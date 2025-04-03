@@ -4,6 +4,16 @@
 #define Switch 5  // Bouton de l'encodeur
 
 #include <Adafruit_SSD1306.h>
+#include <SPI.h>
+
+const byte csPin = 10;
+const int maxPositions = 256;
+const long rAB = 92500;
+const byte rWiper = 125;
+const byte pot0 = 0x11;
+const byte pot0Shutdown = 0x21;
+int potValue = 0;  // Valeur du potentiomètre digital (0 à 255)
+bool editingPotValue = false;  // Indique si on est en train de régler la valeur
 
 #define OLED_WIDTH 128
 #define OLED_HEIGHT 64
@@ -73,6 +83,10 @@ void doEncoder();
 
 void setup() {
   Serial.begin(9600);
+
+  digitalWrite(csPin, HIGH);
+  pinMode(csPin, OUTPUT);
+  SPI.begin();
 
   pinMode(encoder0PinA, INPUT);
   pinMode(encoder0PinB, INPUT);
@@ -148,6 +162,22 @@ void loop() {
 
 }
 
+void setPotWiper(int addr, int pos) {
+  pos = constrain(pos,0,255);
+  digitalWrite(csPin, LOW);
+  SPI.transfer(addr);
+  SPI.transfer(pos);
+  digitalWrite(csPin, HIGH);
+
+  long resistanceWB = ( (rAB * pos) / maxPositions ) + rWiper;
+  Serial.print("Wiper position: ");
+  Serial.print(pos);
+  Serial.print("Resistance wiper to B: ");
+  Serial.print(resistanceWB);
+  Serial.println(" ohms");
+
+}
+
 void detecterAppuiBouton() {
   bool buttonState = digitalRead(Switch);
 
@@ -160,7 +190,16 @@ void detecterAppuiBouton() {
 
   if (buttonState == HIGH && lastButtonState == LOW) {
     if (buttonPressed) {
-      changerMenu();
+      if (menuState == 5) {  
+        setPotWiper(pot0, potValue);  // Appliquer la valeur
+        Serial.print("Potentiomètre réglé sur: ");
+        Serial.println(potValue);
+        menuState = 1;  // Retour au menu CONFIG après validation
+        selection = 0;  // Réinitialisation de la sélection
+        encoderChanged = true;  // Forcer la mise à jour
+      } else {
+        changerMenu();
+      }
       buttonPressed = false;
     }
   }
@@ -176,9 +215,8 @@ void afficherMenu() {
     afficherOption("Config", 0);
     afficherOption("Mesure", 1);
   } else if (menuState == 1) {  // Sous-menu "Config"
-    afficherOption("Option A", 0);
-    afficherOption("Option B", 1);
-    afficherOption("Retour", 2);
+    afficherOption("Regler Pot", 0);
+    afficherOption("Retour", 1);
   } else if (menuState == 2) {  // Sous-menu "Mesure"
     afficherOption("Graphite", 0);
     afficherOption("Flex", 1);
@@ -189,12 +227,15 @@ void afficherMenu() {
   } else if (menuState == 4) {  // Menu du capteur Graphite
     afficherOption("Mesurer", 0);
     afficherOption("Retour", 1);
+  } else if (menuState == 5) {  // Menu de réglage du potentiomètre
+    afficherValeurPotentiometre();
   }
 
   ecranOLED.display();
 }
 
 void afficherOption(const char *texte, int position) {
+  ecranOLED.setTextSize(1);
   if (selection % 3 == position) {
     ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
   } else {
@@ -269,15 +310,44 @@ void afficherValeurGraphite(float Rpot) {
   }
 }
 
+void afficherValeurPotentiometre() {
+  ecranOLED.clearDisplay();
+  ecranOLED.setTextSize(1);
+  ecranOLED.setTextColor(SSD1306_WHITE);
+    
+  ecranOLED.setCursor(10, 10);
+  ecranOLED.println("Potentiom.");
+    
+  ecranOLED.setCursor(10, 30);
+  ecranOLED.print("Valeur: ");
+  ecranOLED.print(potValue);
+    
+  ecranOLED.setCursor(10, 50);
+  if (selection == 0) {
+    ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
+  } else {
+    ecranOLED.setTextColor(SSD1306_WHITE, SSD1306_BLACK);
+  }
+  ecranOLED.println("OK");
+
+  ecranOLED.display();
+}
+
 void changerMenu() {
   if (menuState == 0) {  // Menu principal
     menuState = (selection == 0) ? 1 : 2;
-  } else if (menuState == 1 || menuState == 2) {  // Sous-menus Config / Mesure
+  } else if (menuState == 1) {  // Sous-menu Config
+    if (selection == 1) {
+      menuState = 0;  // Retour au menu principal
+    } else if (selection == 0) {
+      menuState = 5;  // Aller au réglage du potentiomètre
+    }
+  } else if (menuState == 2) {  // Sous-menu Mesure
     if (selection == 2) {
       menuState = 0;  // Retour au menu principal
-    } else if (menuState == 2 && selection == 1) {
+    } else if (selection == 1) {
       menuState = 3;  // Aller au menu du capteur Flex
-    } else if (menuState == 2 && selection == 0) {
+    } else if (selection == 0) {
       menuState = 4;  // Aller au menu du capteur Graphite
     }
   } else if (menuState == 3) {  // Menu du capteur Flex
@@ -292,6 +362,8 @@ void changerMenu() {
     } else {
       afficherValeurGraphite(40000.0);
     }
+  } else if (menuState == 5) {  // Menu de réglage du potentiomètre
+    menuState = 1;  // Retour au menu "Config" après validation
   }
 
   selection = 0;  // Réinitialiser la sélection
@@ -299,12 +371,26 @@ void changerMenu() {
 }
 
 void doEncoder() {
-  int maxOptions = (menuState == 1 || menuState == 2) ? 3 : 2;  // 3 options pour Config/Mesure, 2 pour Flex/Graphite
 
-  if (digitalRead(encoder0PinA) == HIGH && digitalRead(encoder0PinB) == HIGH) {
-    selection = (selection + 1) % maxOptions;
-  } else if (digitalRead(encoder0PinA) == HIGH && digitalRead(encoder0PinB) == LOW) {
-    selection = (selection - 1 + maxOptions) % maxOptions;
+  if (menuState == 5) {  // Si on est dans "Régler Pot."
+    if (selection == 0) {  // Modification de la valeur du potentiomètre
+      if (digitalRead(encoder0PinA) == HIGH && digitalRead(encoder0PinB) == HIGH) {
+        potValue = min(potValue + 10, 255);
+      } else if (digitalRead(encoder0PinA) == HIGH && digitalRead(encoder0PinB) == LOW) {
+        potValue = max(potValue - 10, 0);
+      }
+    } else {  // Navigation sur "OK"
+      selection = (selection == 0) ? 1 : 0;
+    }
+    encoderChanged = true;
+  } else {  // Navigation normale dans les menus
+    int maxOptions = (menuState == 1 || menuState == 2) ? 3 : 2;
+    if (digitalRead(encoder0PinA) == HIGH && digitalRead(encoder0PinB) == HIGH) {
+      selection = (selection + 1) % maxOptions;
+    } else if (digitalRead(encoder0PinA) == HIGH && digitalRead(encoder0PinB) == LOW) {
+      selection = (selection - 1 + maxOptions) % maxOptions;
+    }
+    encoderChanged = true;
   }
 
   encoderChanged = true;
