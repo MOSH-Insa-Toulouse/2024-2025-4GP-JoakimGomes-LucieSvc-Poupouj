@@ -49,11 +49,33 @@ void setup() {
 
   afficherMenu();
 
+<<<<<<< HEAD:Code Arduino/Capteur_graphite/Capteur_graphite_2/Capteur_graphite_2.ino
+  //Flexsensor
+  if (!ecranOLED.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Adresse I2C : 0x3C
+        Serial.println("Échec de l'initialisation de l'écran OLED");
+        for (;;);
+    }
+
+  // Ecran OLED 
+  if(!ecranOLED.begin(SSD1306_SWITCHCAPVCC, OLED_I2C_ADDR))
+    while(1);
+  // Arrêt du programme (boucle infinie) si échec d'initialisation
+  ecranOLED.clearDisplay();
+  ecranOLED.setTextSize(3);                   // Taille des caractères (2:1)
+  ecranOLED.setTextColor(SSD1306_WHITE); 
+  ecranOLED.println("Config");
+  ecranOLED.println("Mesure");
+  ecranOLED.display();
+  
+=======
+>>>>>>> 36da538ddb2458cd6bcdd9a603444d4445305723:Code Arduino/Capteur_graphite/Capteur_graphite_2/Capteur_graphite3.ino
   //Bluetooth
   bluetooth.begin(9600);  // Communication avec le module Bluetooth
   Serial.println("Module Bluetooth prêt");      
 }
 
+<<<<<<< HEAD:Code Arduino/Capteur_graphite/Capteur_graphite_2/Capteur_graphite_2.ino
+=======
 void loop() {
   if (encoderChanged) {
     encoderChanged = false;
@@ -83,6 +105,7 @@ void loop() {
   Serial.print(VFlexSensor);
   Serial.println(" V");
 }
+>>>>>>> 36da538ddb2458cd6bcdd9a603444d4445305723:Code Arduino/Capteur_graphite/Capteur_graphite_2/Capteur_graphite3.ino
 
 void detecterAppuiBouton() {
   bool buttonState = digitalRead(Switch);
@@ -103,6 +126,21 @@ void detecterAppuiBouton() {
 
   lastButtonState = buttonState;
 }
+
+void loop() {
+  if (encoderChanged) {
+  //Rotatif
+  if (encoderChanged) {  // Si la valeur de l'encodeur a changé
+    encoderChanged = false;
+    afficherMenu();
+    afficherMenu();  // Afficher la nouvelle valeur
+  }
+
+  detecterAppuiBouton();
+}
+
+
+
 
 void afficherMenu() {
   ecranOLED.clearDisplay();
