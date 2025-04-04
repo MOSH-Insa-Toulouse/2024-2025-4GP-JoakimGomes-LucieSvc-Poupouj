@@ -292,6 +292,7 @@ void afficherValeurGraphite(float Rpot) {
 
     ecranOLED.setCursor(10, 0);
     ecranOLED.println("Graphite Sensor:");
+    rrrr
 
     ecranOLED.setCursor(10, 30);
     ecranOLED.print(RGraphiteSensor);
