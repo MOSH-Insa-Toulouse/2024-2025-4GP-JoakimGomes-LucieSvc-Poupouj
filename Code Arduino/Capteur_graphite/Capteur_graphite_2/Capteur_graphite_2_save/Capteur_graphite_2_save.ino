@@ -98,20 +98,14 @@ void setup() {
     while (1);
   }
 
-  afficherMenu();
+  afficherMenu();  
 
   //Bluetooth
   pinMode(RX,INPUT); // On définit le pin Rx en INPUT
   pinMode(TX,OUTPUT); // On définit le pin Tx en OUTPUT
   pinMode(ADC,INPUT); // On définit l'entrée analogique A0 en INPUT, c'est celle qui va recevoir les valeurs de la résistance du capteur graphite
-  bluetooth.begin(9600);  // Communication avec le module Bluetooth
-  Serial.println("Module Bluetooth prêt");                          
-
-
-  // Pot digital
-  pinMode (ssMCPin, OUTPUT); //select pin output
-  digitalWrite(ssMCPin, HIGH); //SPI chip disabled
-  SPI.begin(); 
+  bluetooth.begin(9600);  // Communication avec le module Bluetooth                 
+  
 }
 
 void loop() {
@@ -141,9 +135,6 @@ void loop() {
   int valeurBrute = analogRead(ADC);
   float Vadc = (4*valeurBrute / 1024.0) * 5.0;  // Conversion en tension (0-5V)
   int Rcapteur= ((1 + R3/R2 ) * R1 * (5.0/Vadc)) - (R5-R1);
-  Serial.print("Resistance mesurée : ");
-  Serial.print(Rcapteur);
-  Serial.println(" Ohms");
 
     /* bluetooth.print("Tension: ");
     bluetooth.write(valeurBrute);
