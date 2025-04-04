@@ -98,7 +98,7 @@ void setup() {
     while (1);
   }
 
-  afficherMenu();
+  afficherMenu();  
 
   //Bluetooth
   pinMode(RX,INPUT); // On définit le pin Rx en INPUT
