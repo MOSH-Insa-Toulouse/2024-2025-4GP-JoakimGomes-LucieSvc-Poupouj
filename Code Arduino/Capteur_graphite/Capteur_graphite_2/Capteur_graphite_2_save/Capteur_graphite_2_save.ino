@@ -112,9 +112,6 @@ void loop() {
   // Pot Digital
   SPIWrite(MCP_WRITE, 255/50, ssMCPin);
 
-
-
-
   if (encoderChanged) {
     encoderChanged = false;
     afficherMenu();
@@ -131,6 +128,7 @@ void loop() {
     afficherValeurGraphite(40000.0);
   }
 
+
   //Bluetooth
   int valeurBrute = analogRead(ADC);
   float Vadc = (4*valeurBrute / 1024.0) * 5.0;  // Conversion en tension (0-5V)
@@ -146,11 +144,10 @@ void loop() {
   ValeurResBit=analogRead(ADC);
   //ValeurResBitAppli=valeurBrute/4;
   uint8_t RcapteurBit= ((1 + R3/R2 ) * R1 * (5.0/ValeurResBit)) - (R5-R1);
-  Serial.println(RcapteurBit); // Test pour vérifier la valeur mesurer à la sortie de A0 en cass de problèmes avec l'appli; ligne à vocation uniquement utilitaire pour le programmeur
-  bluetooth.write(RcapteurBit);
+  //Serial.println(RcapteurBit); // Test pour vérifier la valeur mesurer à la sortie de A0 en cass de problèmes avec l'appli; ligne à vocation uniquement utilitaire pour le programmeur
+  //bluetooth.write(RcapteurBit);
 
   delay(1000);  // Envoi toutes les secondes
-
 }
 
 void setPotWiper(int addr, int pos) {
