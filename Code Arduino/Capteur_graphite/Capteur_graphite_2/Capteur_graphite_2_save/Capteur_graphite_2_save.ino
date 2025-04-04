@@ -14,7 +14,6 @@ const byte pot0 = 0x11;
 const byte pot0Shutdown = 0x21;
 int potValue = 0;  // Valeur du potentiomètre digital (0 à 255)
 bool editingPotValue = false;  // Indique si on est en train de régler la valeur
-long resistanceWB;
 
 #define OLED_WIDTH 128
 #define OLED_HEIGHT 64
@@ -105,54 +104,61 @@ void setup() {
   pinMode(RX,INPUT); // On définit le pin Rx en INPUT
   pinMode(TX,OUTPUT); // On définit le pin Tx en OUTPUT
   pinMode(ADC,INPUT); // On définit l'entrée analogique A0 en INPUT, c'est celle qui va recevoir les valeurs de la résistance du capteur graphite
-  bluetooth.begin(9600);  // Communication avec le module Bluetooth                 
-  
+  bluetooth.begin(9600);  // Communication avec le module Bluetooth
+                          
+
+
+  // Pot digital
+  pinMode (ssMCPin, OUTPUT); //select pin output
+  digitalWrite(ssMCPin, HIGH); //SPI chip disabled
+  SPI.begin(); 
 }
 
+unsigned long lastSendTime = 0;
+
 void loop() {
-  // Pot Digital
-  SPIWrite(MCP_WRITE, 255/50, ssMCPin);
+  unsigned long currentTime = millis();
 
+  // autres traitements ici...
 
-
+  detecterAppuiBouton();
 
   if (encoderChanged) {
     encoderChanged = false;
     afficherMenu();
   }
 
-  detecterAppuiBouton();
-
-  // Mise à jour de l'affichage des mesures Flex en temps réel
   if (menuState == 3) {
     afficherValeurFlex();
+  } else if (menuState == 4) {
+    afficherValeurGraphite(40000.0);
   }
 
-  if (menuState == 4) {
-    afficherValeurGraphite(resistanceWB);
-  }
-
-  //Bluetooth
-  int valeurBrute = analogRead(ADC);
-  float Vadc = (4*valeurBrute / 1024.0) * 5.0;  // Conversion en tension (0-5V)
-  int Rcapteur= ((1 + R3/R2 ) * R1 * (5.0/Vadc)) - (R5-R1);
+  // Bluetooth - exécution toutes les 1000 ms
+  if (currentTime - lastSendTime >= 1000) {
+    lastSendTime = currentTime;
+    int valeurBrute = analogRead(ADC);
+    float Vadc = (4*valeurBrute / 1024.0) * 5.0;  // Conversion en tension (0-5V)
+    int Rcapteur= ((1 + R3/R2 ) * R1 * (5.0/Vadc)) - (R5-R1);
+    Serial.print("Resistance mesurée : ");
+    Serial.print(Rcapteur);
+    Serial.println(" Ohms");
 
     /* bluetooth.print("Tension: ");
     bluetooth.write(valeurBrute);
     bluetooth.print(tension);
     bluetooth.println(" V"); */
 
-  uint8_t ValeurResBitAppli;
-  uint8_t ValeurResBit;
-  ValeurResBit=analogRead(ADC);
-  //ValeurResBitAppli=valeurBrute/4;
-  uint8_t RcapteurBit= ((1 + R3/R2 ) * R1 * (5.0/ValeurResBit)) - (R5-R1);
-  Serial.println(RcapteurBit); // Test pour vérifier la valeur mesurer à la sortie de A0 en cass de problèmes avec l'appli; ligne à vocation uniquement utilitaire pour le programmeur
-  bluetooth.write(RcapteurBit);
-
-  delay(1000);  // Envoi toutes les secondes
-
+    uint8_t ValeurResBitAppli;
+    uint8_t ValeurResBit;
+    ValeurResBit=analogRead(ADC);
+    //ValeurResBitAppli=valeurBrute/4;
+    uint8_t RcapteurBit= ((1 + R3/R2 ) * R1 * (5.0/ValeurResBit)) - (R5-R1);
+    //Serial.println(RcapteurBit); // Test pour vérifier la valeur mesurer à la sortie de A0 en cass de problèmes avec l'appli; ligne à vocation uniquement utilitaire pour le programmeur
+    bluetooth.write(RcapteurBit);
+  }
 }
+
 
 void setPotWiper(int addr, int pos) {
   pos = constrain(pos,0,255);
@@ -161,12 +167,12 @@ void setPotWiper(int addr, int pos) {
   SPI.transfer(pos);
   digitalWrite(csPin, HIGH);
 
-  resistanceWB = ( (rAB * pos) / maxPositions ) + rWiper;
-  Serial.print("Wiper position: ");
+  long resistanceWB = ( (rAB * pos) / maxPositions ) + rWiper;
+  /*Serial.print("Wiper position: ");
   Serial.print(pos);
   Serial.print("Resistance wiper to B: ");
   Serial.print(resistanceWB);
-  Serial.println(" ohms");
+  Serial.println(" ohms");*/
 
 }
 
@@ -352,7 +358,7 @@ void changerMenu() {
     if (selection == 1) {  // Si "Retour" est sélectionné
       menuState = 2;  // Retour au menu "Mesure"
     } else {
-      afficherValeurGraphite(resistanceWB);
+      afficherValeurGraphite(40000.0);
     }
   } else if (menuState == 5) {  // Menu de réglage du potentiomètre
     menuState = 1;  // Retour au menu "Config" après validation
