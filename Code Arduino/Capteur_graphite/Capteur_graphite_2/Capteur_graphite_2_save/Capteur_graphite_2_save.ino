@@ -8,11 +8,11 @@
 
 const byte csPin = 10;
 const int maxPositions = 256;
-const long rAB = 92500;
+const long rAB = 50000;
 const byte rWiper = 125;
 const byte pot0 = 0x11;
 const byte pot0Shutdown = 0x21;
-int potValue = 0;  // Valeur du potentiomètre digital (0 à 255)
+int potValue = 100;  // Valeur du potentiomètre digital (0 à 255)
 bool editingPotValue = false;  // Indique si on est en train de régler la valeur
 
 #define OLED_WIDTH 128
@@ -51,10 +51,10 @@ const float R_DIV = 33000.0;
 const float flatresistance = 33000.0;
 const float bendresistance = 75000.0;
 
-const float R5 = 10000.0;
-const float R3 = 10000.0;
-const float R2 = 1000.0;
+const float R3 = 100000.0;
+float Rpot;
 const float R1 = 100000.0;
+const float R5 = 10000.0;
 
 
 // Potentiomètre digital
@@ -79,8 +79,6 @@ void SPIWrite(uint8_t cmd, uint8_t data, uint8_t ssPin) // SPI write the command
 }
 
 // === Déclaration de la fonction avant setup ===
-void doEncoder();
-
 void setup() {
   Serial.begin(9600);
 
@@ -112,15 +110,14 @@ void setup() {
   pinMode (ssMCPin, OUTPUT); //select pin output
   digitalWrite(ssMCPin, HIGH); //SPI chip disabled
   SPI.begin(); 
+  setPotWiper(pot0, potValue);
 }
 
 unsigned long lastSendTime = 0;
 
 void loop() {
   unsigned long currentTime = millis();
-
-  // autres traitements ici...
-
+  
   detecterAppuiBouton();
 
   if (encoderChanged) {
@@ -131,16 +128,17 @@ void loop() {
   if (menuState == 3) {
     afficherValeurFlex();
   } else if (menuState == 4) {
-    afficherValeurGraphite(40000.0);
+    afficherValeurGraphite(Rpot);
   }
 
 
-  // Bluetooth - exécution toutes les 1000 ms
+  // Bluetooth - exécution toutes les 50 ms
   if (currentTime - lastSendTime >= 1000) {
     lastSendTime = currentTime;
     int valeurBrute = analogRead(ADC);
-    float Vadc = (4*valeurBrute / 1024.0) * 5.0;  // Conversion en tension (0-5V)
-    int Rcapteur= ((1 + R3/R2 ) * R1 * (5.0/Vadc)) - (R5-R1);
+    float Vadc = (valeurBrute * 5.0 / 1023.0);  // Conversion en tension (0-5V)
+
+    int Rcapteur= ((1 + R3/Rpot ) * R1 * (5.0/Vadc)) - R1;
     Serial.print("Resistance mesurée : ");
     Serial.print(Rcapteur);
     Serial.println(" Ohms");
@@ -154,8 +152,8 @@ void loop() {
     uint8_t ValeurResBit;
     ValeurResBit=analogRead(ADC);
     //ValeurResBitAppli=valeurBrute/4;
-    uint8_t RcapteurBit= ((1 + R3/R2 ) * R1 * (5.0/ValeurResBit)) - (R5-R1);
-    //Serial.println(RcapteurBit); // Test pour vérifier la valeur mesurer à la sortie de A0 en cass de problèmes avec l'appli; ligne à vocation uniquement utilitaire pour le programmeur
+    uint8_t RcapteurBit= ((1 + R3/Rpot ) * R1 * (5.0/ValeurResBit)) - R1;
+    Serial.println(ValeurResBit); // Test pour vérifier la valeur mesurer à la sortie de A0 en cass de problèmes avec l'appli; ligne à vocation uniquement utilitaire pour le programmeur
     bluetooth.write(RcapteurBit);
   }
 }
@@ -167,14 +165,16 @@ void setPotWiper(int addr, int pos) {
   SPI.transfer(addr);
   SPI.transfer(pos);
   digitalWrite(csPin, HIGH);
+  SPIWrite(MCP_WRITE, pos, ssMCPin);  ////
 
-  long resistanceWB = ( (rAB * pos) / maxPositions ) + rWiper;
+  //Rpot = pos * 50000 / 255;
+  //long resistanceWB 
+  Rpot = ( (rAB * pos) / maxPositions ) + rWiper;
   /*Serial.print("Wiper position: ");
   Serial.print(pos);
   Serial.print("Resistance wiper to B: ");
   Serial.print(resistanceWB);
   Serial.println(" ohms");*/
-
 }
 
 void detecterAppuiBouton() {
@@ -264,7 +264,7 @@ void afficherValeurFlex() {
 
     ecranOLED.setCursor(10, 30);
     ecranOLED.print(RFlexSensor);
-    ecranOLED.println(" Ohms");
+    ecranOLED.println(" MOhms");
 
     ecranOLED.setCursor(10, 40);
     ecranOLED.print(angle);
@@ -288,15 +288,22 @@ void afficherValeurGraphite(float Rpot) {
     ecranOLED.setTextColor(SSD1306_WHITE);
 
     int VGraphiteBrute = analogRead(GRAPHITE_SENSOR_PIN);
-    float VGraphiteSensor = (VGraphiteBrute / 1024.0) * 5.0; // Conversion en tension
-    float RGraphiteSensor = (1 + R5 / Rpot) * R1 * (5.0/VGraphiteSensor) - R1 - R5;
+    float RGraphiteSensor = ((1.0 + R3 / Rpot) * R1 * (1024.0/(float)VGraphiteBrute)) - R1 - R5;
+    RGraphiteSensor = RGraphiteSensor/1000000;
+    Serial.println("mesure: ");
+    Serial.println(VGraphiteBrute);
+    float VADC = (float)VGraphiteBrute*5.0/1024.0;
+    Serial.println(VADC);
+    Serial.println(RGraphiteSensor);
+    Serial.println(Rpot);
+
 
     ecranOLED.setCursor(10, 0);
     ecranOLED.println("Graphite Sensor:");
 
     ecranOLED.setCursor(10, 30);
     ecranOLED.print(RGraphiteSensor);
-    ecranOLED.println(" Ohms");
+    ecranOLED.println(" MOhms");
 
     ecranOLED.setCursor(10, 50);
     ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
@@ -359,7 +366,7 @@ void changerMenu() {
     if (selection == 1) {  // Si "Retour" est sélectionné
       menuState = 2;  // Retour au menu "Mesure"
     } else {
-      afficherValeurGraphite(40000.0);
+      afficherValeurGraphite(Rpot);
     }
   } else if (menuState == 5) {  // Menu de réglage du potentiomètre
     menuState = 1;  // Retour au menu "Config" après validation
