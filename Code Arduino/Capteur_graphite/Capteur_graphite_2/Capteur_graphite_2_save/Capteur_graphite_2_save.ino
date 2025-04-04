@@ -251,7 +251,7 @@ void afficherValeurFlex() {
     ecranOLED.setTextColor(SSD1306_WHITE);
 
     int VFlexbrute = analogRead(FLEX_SENSOR_PIN);
-    float VFlexSensor = (VFlexbrute / 1024.0) * 5.0; // Conversion en tension
+    float VFlexSensor = ((VFlexbrute) / 1024.0) * 5.0; // Conversion en tension
     float RFlexSensor = R_DIV * (5.0 / VFlexSensor - 1.0);
     float angle = map(RFlexSensor, flatresistance, bendresistance, 0, 90.0);
 
@@ -300,6 +300,7 @@ void afficherValeurGraphite(float Rpot) {
 
     ecranOLED.setCursor(10, 0);
     ecranOLED.println("Graphite Sensor:");
+    rrrr
 
     ecranOLED.setCursor(10, 30);
     ecranOLED.print(RGraphiteSensor);
