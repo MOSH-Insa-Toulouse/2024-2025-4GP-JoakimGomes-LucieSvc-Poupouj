@@ -139,7 +139,7 @@ void loop() {
     lastSendTime = currentTime;
     int valeurBrute = analogRead(ADC);
     float Vadc = (4*valeurBrute / 1024.0) * 5.0;  // Conversion en tension (0-5V)
-    int Rcapteur= ((1 + R3/R2 ) * R1 * (5.0/Vadc)) - (R5-R1);
+    int Rcapteur= ((1 + (R3/R2) ) * R1 * (5.0/Vadc)) - (R5-R1);
     Serial.print("Resistance mesurée : ");
     Serial.print(Rcapteur);
     Serial.println(" Ohms");
@@ -250,7 +250,7 @@ void afficherValeurFlex() {
     ecranOLED.setTextColor(SSD1306_WHITE);
 
     int VFlexbrute = analogRead(FLEX_SENSOR_PIN);
-    float VFlexSensor = (VFlexbrute / 1024.0) * 5.0; // Conversion en tension
+    float VFlexSensor = ((VFlexbrute) / 1024.0) * 5.0; // Conversion en tension
     float RFlexSensor = R_DIV * (5.0 / VFlexSensor - 1.0);
     float angle = map(RFlexSensor, flatresistance, bendresistance, 0, 90.0);
 
@@ -287,8 +287,8 @@ void afficherValeurGraphite(float Rpot) {
     ecranOLED.setTextColor(SSD1306_WHITE);
 
     int VGraphiteBrute = analogRead(GRAPHITE_SENSOR_PIN);
-    float VGraphiteSensor = (VGraphiteBrute / 1024.0) * 5.0; // Conversion en tension
-    float RGraphiteSensor = (1 + R5 / Rpot) * R1 * (5.0/VGraphiteSensor) - R1 - R5;
+    float VGraphiteSensor = ((VGraphiteBrute) / 1024.0) * 5.0; // Conversion en tension
+    float RGraphiteSensor = ((1 + (R3/ Rpot)) * R1 * (5.0/VGraphiteSensor)) - R1;
 
     ecranOLED.setCursor(10, 0);
     ecranOLED.println("Graphite Sensor:");
@@ -358,7 +358,7 @@ void changerMenu() {
     if (selection == 1) {  // Si "Retour" est sélectionné
       menuState = 2;  // Retour au menu "Mesure"
     } else {
-      afficherValeurGraphite(40000.0);
+      afficherValeurGraphite(50000.0);
     }
   } else if (menuState == 5) {  // Menu de réglage du potentiomètre
     menuState = 1;  // Retour au menu "Config" après validation
