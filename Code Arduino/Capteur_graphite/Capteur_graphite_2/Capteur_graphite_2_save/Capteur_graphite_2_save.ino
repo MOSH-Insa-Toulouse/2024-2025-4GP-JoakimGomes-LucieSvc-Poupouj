@@ -14,6 +14,7 @@ const byte pot0 = 0x11;
 const byte pot0Shutdown = 0x21;
 int potValue = 0;  // Valeur du potentiomètre digital (0 à 255)
 bool editingPotValue = false;  // Indique si on est en train de régler la valeur
+long resistanceWB;
 
 #define OLED_WIDTH 128
 #define OLED_HEIGHT 64
@@ -128,7 +129,7 @@ void loop() {
   }
 
   if (menuState == 4) {
-    afficherValeurGraphite(40000.0);
+    afficherValeurGraphite(resistanceWB);
   }
 
   //Bluetooth
@@ -160,7 +161,7 @@ void setPotWiper(int addr, int pos) {
   SPI.transfer(pos);
   digitalWrite(csPin, HIGH);
 
-  long resistanceWB = ( (rAB * pos) / maxPositions ) + rWiper;
+  resistanceWB = ( (rAB * pos) / maxPositions ) + rWiper;
   Serial.print("Wiper position: ");
   Serial.print(pos);
   Serial.print("Resistance wiper to B: ");
@@ -351,7 +352,7 @@ void changerMenu() {
     if (selection == 1) {  // Si "Retour" est sélectionné
       menuState = 2;  // Retour au menu "Mesure"
     } else {
-      afficherValeurGraphite(40000.0);
+      afficherValeurGraphite(resistanceWB);
     }
   } else if (menuState == 5) {  // Menu de réglage du potentiomètre
     menuState = 1;  // Retour au menu "Config" après validation
