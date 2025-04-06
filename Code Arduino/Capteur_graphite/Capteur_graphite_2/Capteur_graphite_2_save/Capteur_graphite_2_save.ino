@@ -9,13 +9,12 @@
 const byte csPin = 10;
 const int maxPositions = 256;
 const long rAB = 50000.0;
-const long rAB = 50000;
 const byte rWiper = 125;
 const byte pot0 = 0x11;
 const byte pot0Shutdown = 0x21;
-int potValue = 1100;  // Valeur du potentiomètre digital (0 à 255)
+int potValue = 10;  // Valeur du potentiomètre digital (0 à 255)
 bool editingPotValue = false;  // Indique si on est en train de régler la valeur
-long resistanceWB;
+float resistanceWB;
 
 #define OLED_WIDTH 128
 #define OLED_HEIGHT 64
@@ -54,7 +53,6 @@ const float flatresistance = 33000.0;
 const float bendresistance = 75000.0;
 
 const float R3 = 100000.0;
-float Rpot;
 const float R1 = 100000.0;
 const float R5 = 10000.0;
 
@@ -79,6 +77,8 @@ void SPIWrite(uint8_t cmd, uint8_t data, uint8_t ssPin) // SPI write the command
   digitalWrite(ssPin, HIGH);// SS pin high to de-select chip
   SPI.endTransaction();
 }
+
+void doEncoder();
 
 // === Déclaration de la fonction avant setup ===
 void setup() {
@@ -142,11 +142,10 @@ void loop() {
     lastSendTime = currentTime;
     float valeurBrute = analogRead(ADC);
     float Vadc = (valeurBrute / 1024.0) * 5.0;  // Conversion en tension (0-5V)
-    float Rcapteur= ((1 + (R3/R2) ) * R1 * (5.0/Vadc)) - (R5+R1);
+    float Rcapteur= ((1 + (R3/resistanceWB) ) * R1 * (5.0/Vadc)) - (R5+R1);
     int valeurBrute = analogRead(ADC);
     float Vadc = (valeurBrute * 5.0 / 1023.0);  // Conversion en tension (0-5V)
 
-    int Rcapteur= ((1 + R3/Rpot ) * R1 * (5.0/Vadc)) - R1;
     Serial.print("Resistance mesurée : ");
     Serial.print(Rcapteur);
     Serial.println(" Ohms");
@@ -183,7 +182,7 @@ void setPotWiper(int addr, int pos) {
 
   //Rpot = pos * 50000 / 255;
   //resistanceWB 
-  Rpot = ( (rAB * pos) / maxPositions ) + rWiper;
+  resistanceWB = ( (rAB * pos) / maxPositions ) + rWiper;
   /*Serial.print("Wiper position: ");
   Serial.print(pos);
   Serial.print("Resistance wiper to B: ");
@@ -381,7 +380,6 @@ void changerMenu() {
       menuState = 2;  // Retour au menu "Mesure"
     } else {
       afficherValeurGraphite(resistanceWB);
-      afficherValeurGraphite(Rpot);
     }
   } else if (menuState == 5) {  // Menu de réglage du potentiomètre
     menuState = 1;  // Retour au menu "Config" après validation
