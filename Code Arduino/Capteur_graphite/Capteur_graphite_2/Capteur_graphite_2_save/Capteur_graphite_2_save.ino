@@ -133,7 +133,6 @@ void loop() {
     afficherValeurFlex();
   } else if (menuState == 4) {
     afficherValeurGraphite(resistanceWB);
-    afficherValeurGraphite(Rpot);
   }
 
 
@@ -143,12 +142,13 @@ void loop() {
     float valeurBrute = analogRead(ADC);
     float Vadc = (valeurBrute / 1024.0) * 5.0;  // Conversion en tension (0-5V)
     float Rcapteur= ((1 + (R3/resistanceWB) ) * R1 * (5.0/Vadc)) - (R5+R1);
-    int valeurBrute = analogRead(ADC);
-    float Vadc = (valeurBrute * 5.0 / 1023.0);  // Conversion en tension (0-5V)
+    float RcapteurMohms = Rcapteur/1000000.0;
 
     Serial.print("Resistance mesurée : ");
     Serial.print(Rcapteur);
     Serial.println(" Ohms");
+    Serial.print(RcapteurMohms);
+    Serial.println("Mohms");
     Serial.println(potValue);
     Serial.println(resistanceWB);
     Serial.println(valeurBrute);
@@ -163,7 +163,7 @@ void loop() {
     uint8_t ValeurResBit;
     ValeurResBit=analogRead(ADC);
     //ValeurResBitAppli=valeurBrute/4;
-    uint8_t RcapteurBit= ((1 + R3/Rpot ) * R1 * (5.0/ValeurResBit)) - R1;
+    uint8_t RcapteurBit= ((1 + R3/resistanceWB ) * R1 * (5.0/ValeurResBit)) - R1;
     Serial.println(ValeurResBit); // Test pour vérifier la valeur mesurer à la sortie de A0 en cass de problèmes avec l'appli; ligne à vocation uniquement utilitaire pour le programmeur
     bluetooth.write(RcapteurBit);
   }
