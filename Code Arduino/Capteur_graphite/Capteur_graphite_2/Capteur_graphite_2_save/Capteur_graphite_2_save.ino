@@ -8,12 +8,13 @@
 
 const byte csPin = 10;
 const int maxPositions = 256;
-const long rAB = 50000;
+const long rAB = 50000.0;
 const byte rWiper = 125;
 const byte pot0 = 0x11;
 const byte pot0Shutdown = 0x21;
-int potValue = 100;  // Valeur du potentiomètre digital (0 à 255)
+int potValue = 10;  // Valeur du potentiomètre digital (0 à 255)
 bool editingPotValue = false;  // Indique si on est en train de régler la valeur
+float resistanceWB;
 
 #define OLED_WIDTH 128
 #define OLED_HEIGHT 64
@@ -52,7 +53,6 @@ const float flatresistance = 33000.0;
 const float bendresistance = 75000.0;
 
 const float R3 = 100000.0;
-float Rpot;
 const float R1 = 100000.0;
 const float R5 = 10000.0;
 
@@ -78,6 +78,8 @@ void SPIWrite(uint8_t cmd, uint8_t data, uint8_t ssPin) // SPI write the command
   SPI.endTransaction();
 }
 
+void doEncoder();
+
 // === Déclaration de la fonction avant setup ===
 void setup() {
   Serial.begin(9600);
@@ -101,7 +103,7 @@ void setup() {
   //Bluetooth
   pinMode(RX,INPUT); // On définit le pin Rx en INPUT
   pinMode(TX,OUTPUT); // On définit le pin Tx en OUTPUT
-  pinMode(ADC,INPUT); // On définit l'entrée analogique A0 en INPUT, c'est celle qui va recevoir les valeurs de la résistance du capteur graphite
+  pinMode(ADC,INPUT); // On définit l'entrée analogique A0 en INPUT
   bluetooth.begin(9600);  // Communication avec le module Bluetooth
                           
 
@@ -117,6 +119,8 @@ unsigned long lastSendTime = 0;
 
 void loop() {
   unsigned long currentTime = millis();
+
+  // autres traitements ici...
   
   detecterAppuiBouton();
 
@@ -128,20 +132,27 @@ void loop() {
   if (menuState == 3) {
     afficherValeurFlex();
   } else if (menuState == 4) {
-    afficherValeurGraphite(Rpot);
+    afficherValeurGraphite(resistanceWB);
   }
 
 
   // Bluetooth - exécution toutes les 50 ms
   if (currentTime - lastSendTime >= 1000) {
     lastSendTime = currentTime;
-    int valeurBrute = analogRead(ADC);
-    float Vadc = (valeurBrute * 5.0 / 1023.0);  // Conversion en tension (0-5V)
+    float valeurBrute = analogRead(ADC);
+    float Vadc = (valeurBrute / 1024.0) * 5.0;  // Conversion en tension (0-5V)
+    float Rcapteur= ((1 + (R3/resistanceWB) ) * R1 * (5.0/Vadc)) - (R5+R1);
+    float RcapteurMohms = Rcapteur/1000000.0;
 
-    int Rcapteur= ((1 + R3/Rpot ) * R1 * (5.0/Vadc)) - R1;
     Serial.print("Resistance mesurée : ");
     Serial.print(Rcapteur);
     Serial.println(" Ohms");
+    Serial.print(RcapteurMohms);
+    Serial.println("Mohms");
+    Serial.println(potValue);
+    Serial.println(resistanceWB);
+    Serial.println(valeurBrute);
+    Serial.println(Vadc);
 
     /* bluetooth.print("Tension: ");
     bluetooth.write(valeurBrute);
@@ -152,7 +163,7 @@ void loop() {
     uint8_t ValeurResBit;
     ValeurResBit=analogRead(ADC);
     //ValeurResBitAppli=valeurBrute/4;
-    uint8_t RcapteurBit= ((1 + R3/Rpot ) * R1 * (5.0/ValeurResBit)) - R1;
+    uint8_t RcapteurBit= ((1 + R3/resistanceWB ) * R1 * (5.0/ValeurResBit)) - R1;
     Serial.println(ValeurResBit); // Test pour vérifier la valeur mesurer à la sortie de A0 en cass de problèmes avec l'appli; ligne à vocation uniquement utilitaire pour le programmeur
     bluetooth.write(RcapteurBit);
   }
@@ -161,15 +172,17 @@ void loop() {
 
 void setPotWiper(int addr, int pos) {
   pos = constrain(pos,0,255);
+  SPI.beginTransaction(SPISettings(14000000,MSBFIRST, SPI_MODE0));
   digitalWrite(csPin, LOW);
   SPI.transfer(addr);
   SPI.transfer(pos);
   digitalWrite(csPin, HIGH);
   SPIWrite(MCP_WRITE, pos, ssMCPin);  ////
+  SPI.endTransaction();
 
   //Rpot = pos * 50000 / 255;
-  //long resistanceWB 
-  Rpot = ( (rAB * pos) / maxPositions ) + rWiper;
+  //resistanceWB 
+  resistanceWB = ( (rAB * pos) / maxPositions ) + rWiper;
   /*Serial.print("Wiper position: ");
   Serial.print(pos);
   Serial.print("Resistance wiper to B: ");
@@ -300,7 +313,6 @@ void afficherValeurGraphite(float Rpot) {
 
     ecranOLED.setCursor(10, 0);
     ecranOLED.println("Graphite Sensor:");
-    rrrr
 
     ecranOLED.setCursor(10, 30);
     ecranOLED.print(RGraphiteSensor);
@@ -367,7 +379,7 @@ void changerMenu() {
     if (selection == 1) {  // Si "Retour" est sélectionné
       menuState = 2;  // Retour au menu "Mesure"
     } else {
-      afficherValeurGraphite(Rpot);
+      afficherValeurGraphite(resistanceWB);
     }
   } else if (menuState == 5) {  // Menu de réglage du potentiomètre
     menuState = 1;  // Retour au menu "Config" après validation
