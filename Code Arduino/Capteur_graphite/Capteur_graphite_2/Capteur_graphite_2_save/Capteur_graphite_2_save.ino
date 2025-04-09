@@ -56,6 +56,9 @@ const float R3 = 100000.0;
 const float R1 = 100000.0;
 const float R5 = 10000.0;
 
+unsigned long currentTime;
+
+
 
 // Potentiomètre digital
 #include <SPI.h>
@@ -118,8 +121,6 @@ void setup() {
 unsigned long lastSendTime = 0;
 
 void loop() {
-  unsigned long currentTime = millis();
-
   // autres traitements ici...
   
   detecterAppuiBouton();
@@ -133,39 +134,6 @@ void loop() {
     afficherValeurFlex();
   } else if (menuState == 4) {
     afficherValeurGraphite(resistanceWB);
-  }
-
-
-  // Bluetooth - exécution toutes les 50 ms
-  if (currentTime - lastSendTime >= 1000) {
-    lastSendTime = currentTime;
-    float valeurBrute = analogRead(ADC);
-    float Vadc = (valeurBrute / 1024.0) * 5.0;  // Conversion en tension (0-5V)
-    float Rcapteur= ((1 + (R3/resistanceWB) ) * R1 * (5.0/Vadc)) - (R5+R1);
-    float RcapteurMohms = Rcapteur/1000000.0;
-
-    Serial.print("Resistance mesurée : ");
-    Serial.print(Rcapteur);
-    Serial.println(" Ohms");
-    Serial.print(RcapteurMohms);
-    Serial.println("Mohms");
-    Serial.println(potValue);
-    Serial.println(resistanceWB);
-    Serial.println(valeurBrute);
-    Serial.println(Vadc);
-
-    /* bluetooth.print("Tension: ");
-    bluetooth.write(valeurBrute);
-    bluetooth.print(tension);
-    bluetooth.println(" V"); */
-
-    uint8_t ValeurResBitAppli;
-    uint8_t ValeurResBit;
-    ValeurResBit=analogRead(ADC);
-    //ValeurResBitAppli=valeurBrute/4;
-    uint8_t RcapteurBit= ((1 + R3/resistanceWB ) * R1 * (5.0/ValeurResBit)) - R1;
-    Serial.println(ValeurResBit); // Test pour vérifier la valeur mesurer à la sortie de A0 en cass de problèmes avec l'appli; ligne à vocation uniquement utilitaire pour le programmeur
-    bluetooth.write(RcapteurBit);
   }
 }
 
@@ -325,7 +293,18 @@ void afficherValeurGraphite(float Rpot) {
     ecranOLED.display();
 
     detecterAppuiBouton();  // Vérifie si l'utilisateur appuie sur "Retour"
+    
+    bluetooth.write(RGraphiteSensor);
+    
     delay(200);  // Petite pause pour éviter les rafraîchissements trop rapides
+
+  /*currentTime = millis();
+  // Bluetooth - exécution toutes les 50 ms
+  if (currentTime - lastSendTime >= 1000) {
+    lastSendTime = currentTime;
+    
+  }*/
+
   }
 }
 
