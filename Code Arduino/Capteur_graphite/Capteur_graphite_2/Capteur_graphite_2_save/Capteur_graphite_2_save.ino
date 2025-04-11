@@ -135,6 +135,9 @@ void loop() {
   // Bluetooth - exécution toutes les 50 ms
   if (currentTime - lastSendTime >= 1000) {
     lastSendTime = currentTime;
+    // Mise à jour dynamique de Rpot en fonction de la position actuelle du potentiomètre
+    Rpot = ((rAB * potValue) / maxPositions) + rWiper;
+
     int valeurBrute = analogRead(ADC);
     float Vadc = (valeurBrute * 5.0 / 1023.0);  // Conversion en tension (0-5V)
 
@@ -300,7 +303,7 @@ void afficherValeurGraphite(float Rpot) {
 
     ecranOLED.setCursor(10, 0);
     ecranOLED.println("Graphite Sensor:");
-    rrrr
+    
 
     ecranOLED.setCursor(10, 30);
     ecranOLED.print(RGraphiteSensor);
@@ -367,6 +370,7 @@ void changerMenu() {
     if (selection == 1) {  // Si "Retour" est sélectionné
       menuState = 2;  // Retour au menu "Mesure"
     } else {
+      Rpot = ((rAB * potValue) / maxPositions) + rWiper;
       afficherValeurGraphite(Rpot);
     }
   } else if (menuState == 5) {  // Menu de réglage du potentiomètre
