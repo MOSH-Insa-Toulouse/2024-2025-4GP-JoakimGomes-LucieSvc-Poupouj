@@ -268,8 +268,8 @@ void afficherValeurGraphite(float Rpot) {
     ecranOLED.setTextSize(1);
     ecranOLED.setTextColor(SSD1306_WHITE);
 
-    int VGraphiteBrute = analogRead(GRAPHITE_SENSOR_PIN);
-    float RGraphiteSensor = ((1.0 + R3 / Rpot) * R1 * (1024.0/(float)VGraphiteBrute)) - R1 - R5;
+    float VGraphiteBrute = analogRead(GRAPHITE_SENSOR_PIN);
+    float RGraphiteSensor = ((1.0 + R3 / Rpot) * R1 * (1024.0/VGraphiteBrute)) - R1 - R5;
     RGraphiteSensor = RGraphiteSensor/1000000;
     Serial.println("mesure: ");
     Serial.println(VGraphiteBrute);
@@ -292,10 +292,9 @@ void afficherValeurGraphite(float Rpot) {
 
     ecranOLED.display();
 
-    detecterAppuiBouton();  // Vérifie si l'utilisateur appuie sur "Retour"
-    
-    bluetooth.write(RGraphiteSensor);
-    
+    bluetooth.write(RGraphiteSensor); ////////////////////////////////////////////////////////////////////////////////
+
+    detecterAppuiBouton();  // Vérifie si l'utilisateur appuie sur "Retour"   
     delay(200);  // Petite pause pour éviter les rafraîchissements trop rapides
 
   /*currentTime = millis();
