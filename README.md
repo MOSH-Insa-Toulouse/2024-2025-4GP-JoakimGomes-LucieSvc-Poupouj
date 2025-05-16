@@ -5,16 +5,16 @@
 <hr/>
 <span style="color:blue;">
 <ul>
-<li> Introduction </li><br />
-<li> Livrables </li><br />
-<li> Matériel à disposion </li><br />
-<li> Simulation électronique sur LTSpice </li><br />
-<li> Design du PCB avec KiCad </li><br />
-<li> Développement du code Arduino </li><br />
-<li> Développement de l'application mobile APK avec MIT App Inventor </li><br />
-<li> Banc de test </li><br />
-<li> Datasheet </li><br />
-<li> Conclusion </li><br />
+<li> Introduction </li>
+<li> Livrables </li>
+<li> Matériel à disposion </li>
+<li> Simulation électronique sur LTSpice </li>
+<li> Design du PCB avec KiCad </li>
+<li> Développement du code Arduino </li>
+<li> Développement de l'application mobile APK avec MIT App Inventor </li>
+<li> Banc de test </li>
+<li> Datasheet </li>
+<li> Conclusion </li>
 </ul>
 
 ### Introduction
