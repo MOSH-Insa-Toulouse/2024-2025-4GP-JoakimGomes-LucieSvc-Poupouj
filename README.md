@@ -2,16 +2,6 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Deux styles de puces</title>
-  <style>
-    .puces-carrees {
-      list-style-type: square;
-    }
-
-    .puces-rondes {
-      list-style-type: circle;
-    }
-  </style>
 </head>
 
 <body>
@@ -21,11 +11,10 @@
 
 ### Sommaire
 <hr/>
-<span style="color:blue;">
-<ul class="puces-rondes">
+<ul>
 <li> <a href="#Introduction">Introduction </a></li>
 <li> <a href="#Livrables">Livrables </a></li>
-<li> <a href="#Matériel à disposion">Matériel à disposion </a></li>
+<li> <a href="#Matériel à disposition">Matériel à disposition </a></li>
 <li> <a href="#Simulation électronique sur LTSpice">Simulation électronique sur LTSpice </a></li>
 <li> <a href="#Design du PCB avec KiCad">Design du PCB avec KiCad </a></li>
 <li> <a href="#Développement du code Arduino">Développement du code Arduino </a></li>
@@ -44,9 +33,9 @@
 
 <h2 id="Livrables">Livrables</h2>
 <p>Les livrables de ce projet sont les suivants:</p>
-<ul class="puces-rondes">
+<ul>
 <li>Un schield PCB connecté à une carte Arduino UNO et contenant divers éléments:
-<ul class="puces-carrees">
+<ul>
 <li>Notre capteur de contrainte Low-tech</li>
 
 </ul>
@@ -77,9 +66,5 @@
 
 <h2 id="Conclusion">Conclusion</h2>
 <p>Contenu de Conclusion...</p>
-
-
-</span>
-
 </body>
 </html>
