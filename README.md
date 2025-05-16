@@ -6,7 +6,7 @@
 <span style="color:blue;">
 - Introduction<br />
 - Livrables<br />
-- Matériel à disposion<br /><br />
+- Matériel à disposion<br />
 
 ### Introduction
 <br />
