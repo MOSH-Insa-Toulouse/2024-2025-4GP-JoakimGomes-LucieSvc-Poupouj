@@ -259,9 +259,21 @@ void afficherValeurGraphite(float Rpot) {
     if (currentTime - lastSendTime >= 200) {
       lastSendTime = currentTime;
 
+<<<<<<< HEAD
+    float VGraphiteBrute = analogRead(GRAPHITE_SENSOR_PIN);
+    float RGraphiteSensor = ((1.0 + R3 / Rpot) * R1 * (1024.0/VGraphiteBrute)) - R1 - R5;
+    RGraphiteSensor = RGraphiteSensor/1000000;
+    Serial.println("mesure: ");
+    Serial.println(VGraphiteBrute);
+    float VADC = (float)VGraphiteBrute*5.0/1024.0;
+    Serial.println(VADC);
+    Serial.println(RGraphiteSensor);
+    Serial.println(Rpot);
+=======
       ecranOLED.clearDisplay();
       ecranOLED.setTextSize(1);
       ecranOLED.setTextColor(SSD1306_WHITE);
+>>>>>>> 7f8d72ed9517712ff5ca83709411ab14cfce1dd6
 
       float VGraphiteBrute = analogRead(GRAPHITE_SENSOR_PIN);
       float RGraphiteSensor = ((1.0 + R3 / Rpot) * R1 * (1024.0/VGraphiteBrute)) - R1 - R5;
@@ -279,9 +291,29 @@ void afficherValeurGraphite(float Rpot) {
       ecranOLED.print(RGraphiteSensor);
       ecranOLED.println(" MOhms");
 
+<<<<<<< HEAD
+    ecranOLED.setCursor(10, 50);
+    ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
+    ecranOLED.println("Retour");
+
+    ecranOLED.display();
+
+    bluetooth.write(RGraphiteSensor); ////////////////////////////////////////////////////////////////////////////////
+
+    detecterAppuiBouton();  // Vérifie si l'utilisateur appuie sur "Retour"   
+    delay(200);  // Petite pause pour éviter les rafraîchissements trop rapides
+
+  /*currentTime = millis();
+  // Bluetooth - exécution toutes les 50 ms
+  if (currentTime - lastSendTime >= 1000) {
+    lastSendTime = currentTime;
+    
+  }*/
+=======
       ecranOLED.setCursor(10, 50);
       ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
       ecranOLED.println("Retour");
+>>>>>>> 7f8d72ed9517712ff5ca83709411ab14cfce1dd6
 
       ecranOLED.display();
       
