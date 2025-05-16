@@ -4,16 +4,18 @@
 ### Sommaire
 <hr/>
 <span style="color:blue;">
-- Introduction<br />
-- Livrables<br />
-- Matériel à disposion<br />
-- Simulation électronique sur LTSpice<br />
-- Design du PCB avec KiCad<br />
-- Développement du code Arduino<br />
-- Développement de l'application mobile APK avec MIT App Inventor<br />
-- Banc de test<br />
-- Datasheet<br />
-- Conclusion<br />
+<ul>
+<li> Introduction </li><br />
+<li> Livrables </li><br />
+<li> Matériel à disposion </li><br />
+<li> Simulation électronique sur LTSpice </li><br />
+<li> Design du PCB avec KiCad </li><br />
+<li> Développement du code Arduino </li><br />
+<li> Développement de l'application mobile APK avec MIT App Inventor </li><br />
+<li> Banc de test </li><br />
+<li> Datasheet </li><br />
+<li> Conclusion </li><br />
+</ul>
 
 ### Introduction
 
