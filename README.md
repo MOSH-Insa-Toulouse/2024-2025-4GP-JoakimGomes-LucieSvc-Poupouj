@@ -7,6 +7,13 @@
 - Introduction<br />
 - Livrables<br />
 - Matériel à disposion<br />
+- Simulation électronique sur LTSpice<br />
+- Design du PCB avec KiCad<br />
+- Développement du code Arduino<br />
+- Développement de l'application mobile APK avec MIT App Inventor<br />
+- Banc de test<br />
+- Datasheet<br />
+- Conclusion<br />
 
 ### Introduction
 
