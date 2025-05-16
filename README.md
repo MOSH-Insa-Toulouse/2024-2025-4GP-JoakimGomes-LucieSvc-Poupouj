@@ -1,10 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Deux styles de puces</title>
+  <style>
+    .puces-carrees {
+      list-style-type: square;
+    }
+
+    .puces-rondes {
+      list-style-type: circle;
+    }
+  </style>
+</head>
+
+<body>
+
 # 2024-2025-4GP-JoakimGomes-LucieSvc-Poupouj
 ## Développement d'un capteur low-tech à base de Graphite : de la conception au test
 
 ### Sommaire
 <hr/>
 <span style="color:blue;">
-<ul>
+<ul class="puces-rondes">
 <li> <a href="#Introduction">Introduction </a></li>
 <li> <a href="#Livrables">Livrables </a></li>
 <li> <a href="#Matériel à disposion">Matériel à disposion </a></li>
@@ -22,10 +40,19 @@
 <p>L'UF "du capteur au banc de test" a pour objectif de concevoir un capteur low-tech et de pouvoir ensuite le tester afin de le comparer avec un capteur commercial. Le capteur est à base de graphite, que l'on retrouve notamment dans nos crayons à papier. Son développement est issu de l'article scientifique <i>"Pencil Drawn Strain Gauges and Chemiresistors on Paper"</i>(Cheng-Wei Lin*, Zhibo Zhao*, Jaemyung Kim & Jiaxing Huang). Concevoir ce capteur est relativement simple : on applique à l'aide d'un crayon, du graphite sur un morceau de papier. Les couches de graphite déposées sur le papier agissent comme un conducteur électrique qui, lorsqu'on déforme le papier, a une conductivité (et donc une résistance) qui varie. Cela s'explique par le fait que  le nombre de chaînes de particules de graphite connectées varie selon le type de déformation. En tension, il y a moins de chaines et ces dernières sont plus courtes. C'est le contraire en compression avec des chaines plus proches, laissant ainsi mieux passer le courant.</p>
 
 ![Fonctionnement du capteur](images/capteur_fonctionnement.jpg)
-<i>Figure 1 : Image issu de l'article "Pencil Drawn Strain Gauges and Chemiresistors on Paper" qui explique les déformations des chaines sous compression et tension</i>
+<i>Figure 1 : Image issue de l'article "Pencil Drawn Strain Gauges and Chemiresistors on Paper" qui explique les déformations des chaines sous compression et tension</i>
 
 <h2 id="Livrables">Livrables</h2>
-<p>Contenu de Livrables...</p>
+<p>Les livrables de ce projet sont les suivants:</p>
+<ul class="puces-rondes">
+<li>Un schield PCB connecté à une carte Arduino UNO et contenant divers éléments:
+<ul class="puces-carrees">
+<li>Notre capteur de contrainte Low-tech</li>
+
+</ul>
+</li>
+
+</ul>
 
 <h2 id="Matériel à disposition">Matériel à disposition</h2>
 <p>Contenu de Matériel à disposition...</p>
@@ -53,3 +80,6 @@
 
 
 </span>
+
+</body>
+</html>
