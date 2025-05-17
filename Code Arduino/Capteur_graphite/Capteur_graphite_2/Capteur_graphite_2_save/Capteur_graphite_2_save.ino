@@ -133,40 +133,7 @@ void loop() {
   if (menuState == 3) {
     afficherValeurFlex();
   } else if (menuState == 4) {
-<<<<<<< HEAD
-    afficherValeurGraphite(Rpot);
-  }
-
-
-  // Bluetooth - exécution toutes les 50 ms
-  if (currentTime - lastSendTime >= 1000) {
-    lastSendTime = currentTime;
-    // Mise à jour dynamique de Rpot en fonction de la position actuelle du potentiomètre
-    Rpot = ((rAB * potValue) / maxPositions) + rWiper;
-
-    int valeurBrute = analogRead(ADC);
-    float Vadc = (valeurBrute * 5.0 / 1023.0);  // Conversion en tension (0-5V)
-
-    int Rcapteur= ((1 + R3/Rpot ) * R1 * (5.0/Vadc)) - R1;
-    Serial.print("Resistance mesurée : ");
-    Serial.print(Rcapteur);
-    Serial.println(" Ohms");
-
-    /* bluetooth.print("Tension: ");
-    bluetooth.write(valeurBrute);
-    bluetooth.print(tension);
-    bluetooth.println(" V"); */
-
-    uint8_t ValeurResBitAppli;
-    uint8_t ValeurResBit;
-    ValeurResBit=analogRead(ADC);
-    //ValeurResBitAppli=valeurBrute/4;
-    uint8_t RcapteurBit= ((1 + R3/Rpot ) * R1 * (5.0/ValeurResBit)) - R1;
-    Serial.println(ValeurResBit); // Test pour vérifier la valeur mesurer à la sortie de A0 en cass de problèmes avec l'appli; ligne à vocation uniquement utilitaire pour le programmeur
-    bluetooth.write(RcapteurBit);
-=======
     afficherValeurGraphite(resistanceWB);
->>>>>>> d1845d1e3984ed07531c2831b6f1cadf535a7b23
   }
 }
 
@@ -314,10 +281,6 @@ void afficherValeurGraphite(float Rpot) {
 
     ecranOLED.setCursor(10, 0);
     ecranOLED.println("Graphite Sensor:");
-<<<<<<< HEAD
-    
-=======
->>>>>>> d1845d1e3984ed07531c2831b6f1cadf535a7b23
 
     ecranOLED.setCursor(10, 30);
     ecranOLED.print(RGraphiteSensor);
@@ -395,12 +358,7 @@ void changerMenu() {
     if (selection == 1) {  // Si "Retour" est sélectionné
       menuState = 2;  // Retour au menu "Mesure"
     } else {
-<<<<<<< HEAD
-      Rpot = ((rAB * potValue) / maxPositions) + rWiper;
-      afficherValeurGraphite(Rpot);
-=======
       afficherValeurGraphite(resistanceWB);
->>>>>>> d1845d1e3984ed07531c2831b6f1cadf535a7b23
     }
   } else if (menuState == 5) {  // Menu de réglage du potentiomètre
     menuState = 1;  // Retour au menu "Config" après validation
