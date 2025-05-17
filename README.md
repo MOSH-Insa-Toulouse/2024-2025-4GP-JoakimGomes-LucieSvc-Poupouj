@@ -72,8 +72,9 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 </ul>
 
 <h2 id="Simulation électronique sur LTSpice">Simulation électronique sur LTSpice</h2>
-<p>Les valeurs de résistance de notre capteur graphite sont très élecées, de l'odre du MMΩ. Afin de pouvoir les mesurer correctement, il est nécessaire d’amplifier le signal avant acquisition. Le courant mesuré après application d'une tension de 5V est donc très faible. Il est donc nécessaire d'amplifier le signal avant son acquisition</p>
-<p>Nous avons donc similué un montage amplificateur transimpédance sur LTSpice pour l'optimiser au mieux pour notre capteur : </p>
+<p>Les valeurs de résistance de notre capteur graphite sont très élevées, de l'odre du MΩ. Afin de pouvoir les mesurer correctement, il est nécessaire d’amplifier le signal avant acquisition. Le courant mesuré après application d'une tension de 5V est donc très faible. Il est donc nécessaire d'amplifier le signal avant son acquisition</p>
+</p>Nous avons donc simulé un montage amplificateur transimpédance sur LTspice pour l'optimiser au mieux pour notre capteur : </p>
+
 ![Schéma du PCB](images/LTspcie.png)
 <i>Figure 3 : Schéma de notre montage amplificateur sur LTSpice</i>
 <p>Ce montage permet d'amplifier le signal du capteur à l'aide de l'amplificateur LTC1050, puis de le filtrer. Ce dernier est divisé en 3 pour limiter le bruit  :</p>
