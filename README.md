@@ -127,7 +127,7 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 <i>Figure  10: Visualisation de l'interface de l'application</i>
 
 <h2 id="Banc de test">Banc de test</h2>
-<p>Maintenant que notre plaque PCB est réalisé virtuellement, puis physiquement, et que notre code arduino ainsi que notre application fonction correctement, nous pouvons réaliser le banc de test. Nous avons donc dans un premier temps </p>
+<p>Maintenant que notre plaque PCB est réalisé virtuellement, puis physiquement, et que notre code arduino ainsi que notre application fonction correctement, nous pouvons réaliser le banc de test. L'objectif est de calculer la valeur de la réustance du capteur graphite pour différente valeurs de déformation. Pour cela nous avons utilisé un support avec des cilindres de rayon différents : </p>
 
 <h2 id="Datasheet">Datasheet</h2>
 <p>Le contenu de notre Datasheet se trouve avec le lien suivant : </p>
