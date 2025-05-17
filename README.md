@@ -110,7 +110,7 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 ![visualisation PCB_face_arriere](images/PCB_face_arriere.jpg)</br>
 <i>Figure  7: Visualisation de la face arrière de la PCB, c'est à die les soudures.</i>
 
-![visualisation PCB_face_avant](images/PCB_face_avant.jpg)</br>
+![visualisation PCB_face_avant](images/Capteur.jpg)</br>
 <i>Figure  8: Visualisation de la face avant de la PCB, soit les composants</i>
 
 
