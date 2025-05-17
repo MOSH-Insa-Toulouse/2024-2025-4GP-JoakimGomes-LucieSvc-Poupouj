@@ -120,7 +120,7 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 <p>Maintenant que notre plaque PCB est réalisé virtuellement, puis physiquement, et que notre code arduino ainsi que notre application fonction correctement, nous pouvons réaliser le banc de test. Nous avons dont dans un premier temps </p>
 
 <h2 id="Datasheet">Datasheet</h2>
-<p>Le contenu de notre Datasheet se trouve avce le lien suivant : </p>
+<p>Le contenu de notre Datasheet se trouve avec le lien suivant : </p>
 
 <h2 id="Conclusion">Conclusion</h2>
 <p>     Pour conclure, ce projet capteur a été très enrichissant sur plusieurs aspect. Nous avons pu développé de nombreuses compétences, surtout sur un aspect technique. Le plus pationnant au sein de ce projet étant la réalisation du projet de A à Z. En effet, nous avons commencé par la théorie puis la pratique avec la fabrication du capteur, jusqu'au résulatat final et une analyse de mesure. C'est donc un projet très complet d'un point de vue pédagogique. 
