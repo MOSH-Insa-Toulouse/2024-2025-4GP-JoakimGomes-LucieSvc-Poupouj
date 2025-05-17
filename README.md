@@ -116,7 +116,7 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 ![visualisation code](images/Application.png)</br>
 <i>Figure  : Visualisation du code de l'application</i>
 
-![visualisation interface]()</br>
+![visualisation interface](images/Code_application.png)</br>
 <i>Figure  : Visualisation l'interface de l'application</i>
 
 <h2 id="Banc de test">Banc de test</h2>
