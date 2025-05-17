@@ -80,6 +80,11 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 ![Schéma du PCB](images/schematic_pcb.jpg)
 <i>Figure 3 : ensemble du fichier Schématique sous KiCad 9.0</i>
 
+<p>Une fois le schéma électrique terminé, il faut placer les composants sur le PCB grâce à l'éditeur de PCB. L'objectif est de placer les composants judicieusement pour respecter les contraintes imposées, notamment éviter les vias, vérifier que les composants ne se superposent pas physiquement, respecter les dimensions des pistes et l'isolation.</p>
+
+![Disposition des composants sur le PCB](images/PCB.jpg)
+<i>Figure 4 : Disposition des composants sur l'éditeur de PCB</i>
+
 <h2 id="Développement du code Arduino">Développement du code Arduino</h2>
 <p>Contenu de Développement du code Arduino...</p>
 
