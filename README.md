@@ -105,10 +105,17 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 <i>Figure 6 : Visualisation 3D du PCB et composants</i>
 
 <h2 id="Réalisation du Shield">Réalisation du Shield</h2>
-<p>Une fois la conception du PCB sur KiCad terminée, nous avons pu passer à la réalisation physique de ce PCB. En premier temps, il faut pouvoir "collé" le masque de notre PCB sous KiCad sur une plaque vierge. Une fois cette étape réalisé il suffit de souder tous les supports des composants (cf Figure 7). Ensuite, il ne reste plus qu'à mettre les composants (cf Figure 8). </p>
+<p>Une fois la conception du PCB sur KiCad terminée, nous avons pu passer à la réalisation physique de ce PCB. 
+La première étape essentielle a consisté en la vérification du schéma du circuit imprimé (PCB) à l’aide du logiciel KiCad, afin de s’assurer de sa conformité avant toute fabrication. Une fois cette vérification effectuée, le masque de gravure du PCB a été généré à partir du même logiciel.
+Ensuite, a fabrication a débuté par l’insolation UV d’une plaque d’époxy recouverte d’une fine couche de cuivre et d’un film photosensible. Cette exposition à la lumière permet de durcir les zones du film correspondant aux futures pistes du circuit. La plaque a ensuite été plongée dans un révélateur, ce qui a permis de dissoudre la résine restée non exposée à la lumière. La gravure des pistes a ensuite été réalisée par immersion de la plaque dans une solution de perchlorure de fer, qui attaque le cuivre non protégé par la résine insolée. Enfin, un nettoyage à l’acétone a permis de retirer les résidus de résine, révélant ainsi les pistes de cuivre définitives du circuit imprimé.
+L’ensemble de ces étapes de fabrication a été réalisé par Cathy Crouzet.
+
+Maintenant que toutes ces étapes ont été effectué, nous devons en premier temps réaliser une étape de perçage. Ensuite, il ne reste plus qu'à souder tous les supports des composants (cf Figure 7). Pour finir, il suffit de simplement mettre les composants sur leur support, notre capteur est enfin prêt à être utilisé ! (cf Figure 8) </p>
+
 ![visualisation PCB_face_arriere](images/PCB_face_arriere.jpg)</br>
 <i>Figure  7: Visualisation de la face arrière de la PCB, c'est à die les soudures.</i>
-![visualisation PCB_face_avant](images/PCB_face_avant.jpg)</br>
+
+![visualisation PCB_face_avant](images/Capteur.jpg)</br>
 <i>Figure  8: Visualisation de la face avant de la PCB, soit les composants</i>
 
 
