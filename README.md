@@ -105,7 +105,12 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 <i>Figure 6 : Visualisation 3D du PCB et composants</i>
 
 <h2 id="Réalisation du Shield">Réalisation du Shield</h2>
-<p>Une fois la conception du PCB sur KiCad terminée, nous avons pu passer à la réalisation physique de ce PCB.</p>
+<p>Une fois la conception du PCB sur KiCad terminée, nous avons pu passer à la réalisation physique de ce PCB. En premier temps, il faut pouvoir "collé" le masque de notre PCB sous KiCad sur une plaque vierge. Une fois cette étape réalisé il suffit de souder tous les supports des composants (cf Figure 7). Ensuite, il ne reste plus qu'à mettre les composants (cf Figure 8). </p>
+![visualisation PCB_face_arriere](images/PCB_face_arriere.jpg)</br>
+<i>Figure  7: Visualisation de la face arrière de la PCB, c'est à die les soudures.</i>
+![visualisation PCB_face_avant](images/PCB_face_avant.jpg)</br>
+<i>Figure  8: Visualisation de la face avant de la PCB, soit les composants</i>
+
 
 <h2 id="Développement du code Arduino">Développement du code Arduino</h2>
 <p>Une fois la réalisation physique de notre plaque PCB effectué, il faut à présent développer le code Arduino. Vous pouvez voir notre code sur le github dans la partie "Code Arduino".</p>
@@ -114,10 +119,10 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 <p>En même temps que la réalisation du code arduino, nous avons développé une application mobile APK avec MIT App Inventor. Cette application permet d'effectuer les mesures du capteur graphite, notamment obtenir un graphe  de la résistance en fonction de la tension/compression en temps réel. L'application connecte donc via le module bluetooth notre capteur avec un téléphone android.</p>
 
 ![visualisation interface](images/Code_application.png)</br>
-<i>Figure  : Visualisation du code de l'application</i>
+<i>Figure  9: Visualisation du code de l'application</i>
 
 ![visualisation code](images/Application.png)</br>
-<i>Figure  : Visualisation l'interface de l'application</i>
+<i>Figure  10: Visualisation de l'interface de l'application</i>
 
 <h2 id="Banc de test">Banc de test</h2>
 <p>Maintenant que notre plaque PCB est réalisé virtuellement, puis physiquement, et que notre code arduino ainsi que notre application fonction correctement, nous pouvons réaliser le banc de test. L'objectif est de calculer la valeur de la réustance du capteur graphite pour différente valeurs de déformation. Pour cela nous avons utilisé un support avec des cilindres de rayon différents : </p>
