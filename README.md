@@ -17,6 +17,7 @@
 <li> <a href="#Matériel à disposition">Matériel à disposition </a></li>
 <li> <a href="#Simulation électronique sur LTSpice">Simulation électronique sur LTSpice </a></li>
 <li> <a href="#Design du PCB avec KiCad">Design du PCB avec KiCad </a></li>
+<li> <a href="#Réalisation du Shield">Réalisation du Shield </a></li>
 <li> <a href="#Développement du code Arduino">Développement du code Arduino </a></li>
 <li> <a href="#Développement de l'application mobile APK avec MIT App Inventor">Développement de l'application mobile APK avec MIT App Inventor </a></li>
 <li> <a href="#Banc de test">Banc de test </a></li>
@@ -96,6 +97,14 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 ![Disposition des composants sur le PCB](images/PCB.jpg)
 <i>Figure 4 : Disposition des composants sur l'éditeur de PCB</i>
 
+<p>Et voici la visualisation 3D de notre PCB avec tous les composants (l'amplificateur est sous l'écran OLED).</p>
+
+![visualisation 3D](images/visu_3D.jpg)
+<i>Figure 5 : Visualisation 3D du PCB et composants</i>
+
+<h2 id="Réalisation du Shield">Réalisation du Shield</h2>
+<p>Une fois la conception du PCB sur KiCad terminée, nous avons pu passer à la réalisation physique de ce PCB.</p>
+
 <h2 id="Développement du code Arduino">Développement du code Arduino</h2>
 <p>Contenu de Développement du code Arduino...</p>
 
@@ -109,6 +118,8 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 <p>Contenu de Datasheet...</p>
 
 <h2 id="Conclusion">Conclusion</h2>
-<p>Contenu de Conclusion...</p>
+<p>     Pour conclure, ce projet capteur a été très enrichissant sur plusieurs aspect. Nous avons pu développé de nombreuses compétences, surtout sur un aspect technique. Le plus pationnant au sein de ce projet étant la réalisation du projet de A à Z. En effet, nous avons commencé par la théorie puis la pratique avec la fabrication du capteur, jusqu'au résulatat final et une analyse de mesure. C'est donc un projet très complet d'un point de vue pédagogique. 
+
+En ce qui concerne le capteur graphite réalisé, il fonctionne et est utilisable. En revanche, il manque encore grandement de précision. En effet, il n'est pas assez "stable" et "constant" lors de son utilisation. Par exemple, il ne donne pas exactement les mêmes résultats après chaque mesure réalisé de manière identique. Ceci est sûrement dû au manque de matériel de mesure précis. Effectivement, faire les mesure "à la main" n'est pas très bon d'un point de vue rigueur et scientifique. Le capteur manque parfois de graphite ou alors la flexion ou compression n'est exactement bien réalisé... De plus on peut voir la limite d'utilisation au crayon HB (cf datasheet), en dessous duquel (donc crayon moins gras), il n'est plus possible d'être mesuré. Il ne peut donc pas être encore industrialisable.</p>
 </body>
 </html>
