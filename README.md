@@ -125,7 +125,18 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 <i>Figure  10: Visualisation de l'interface de l'application</i>
 
 <h2 id="Banc de test">Banc de test</h2>
-<p>Maintenant que notre plaque PCB est réalisé virtuellement, puis physiquement, et que notre code arduino ainsi que notre application fonction correctement, nous pouvons réaliser le banc de test. L'objectif est de calculer la valeur de la réustance du capteur graphite pour différente valeurs de déformation. Pour cela nous avons utilisé un support avec des cilindres de rayon différents : </p>
+<p>Maintenant que notre plaque PCB est réalisé virtuellement, puis physiquement, et que notre code arduino ainsi que notre application fonction correctement, nous pouvons réaliser le banc de test. L'objectif est de calculer la valeur de la réustance du capteur graphite pour différente valeurs de déformation. Pour cela nous avons utilisé un support avec des cilindres de rayon différents (1,5 cm, 2 cm, ..., 4cm). </p>
+<p>Notre papier de test ayant une épaisseure e = 0,214mm nous pouvons calculer la déformation engendrée par chacun des rayons de courbure avec la formule : ϵ = e/2r</p>
+<p>Nous avons donc effectué des mesures en Tension et en Compression pour des crayons de duretés différentes (2H, B, 3B, 6B) avec une valeur de potentiommètre 1 960 Ω.</p>
+<p>En traçant la courbe ΔR/R0 en fonction de la déformation, la théorie nous dit que devons avoir une relation linéaire entre les 2. Nous avons donc tracé une droite de régression linéaire passant par 0 pour chacune des courbes et trouvons les résultats suivant :</p>
+
+![visualisation interface](images/Tension.png)</br>
+<i>Figure  11: Courbes de ΔR/R0 en fonction de la déformation en Tension</i>
+
+![visualisation code](images/.png)</br>
+<i>Figure  12: Courbes de ΔR/R0 en fonction de la déformation en Compression</i>
+
+<p>Comme prédit par la théorie, nous pourvons observer que en Tension la résistance augmente avec la déformation, alors qu'en Compression elle diminue. De plus, plus le crayon est sec (ex : 2H) plus la pente est élevée. Nous remarquons cependant que pour le crayons 2H semble perdre en précision quand la déformation est élevée (pente de la courbe diminue). Cela peut s'expliquer car il y a très peut de chaines de particules permettant la déformation.</p>
 
 <h2 id="Datasheet">Datasheet</h2>
 <p>Le contenu de notre Datasheet se trouve avec le lien suivant : </p>
