@@ -78,11 +78,11 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 <i>Figure 3 : Schéma de notre montage amplificateur sur LTSpice</i>
 <p>Ce montage permet d'amplifier le signal du capteur à l'aide de l'amplificateur LTC1050, puis de le filtrer. Ce dernier est divisé en 3 pour limiter le bruit  :</p>
 <ul>
-<li> R5 et C1 : possède une fréquence de coupure de 16Hz et permet d'atténuer les bruits présents sur le signal d’entrée</li>
-<li> R3 et C4 en association avec l’AOP : filtre passe-bas avec une fréquence de coupure de 1,6 Hz, qui permet de filtrer le 50 Hz du réseau électrique</li>
-<li> R4 et C2 : possède une fréquence de coupure de 1,6 kHz et permet de filtrer les bruits parasites engendrés par le traitement du signal</li>
+<li>R5 et C1 : possède une fréquence de coupure de 16Hz et permet d'atténuer les bruits présents sur le signal d’entrée</li>
+<li>R3 et C4 en association avec l’AOP : filtre passe-bas avec une fréquence de coupure de 1,6 Hz, qui permet de filtrer le 50 Hz du réseau électrique</li>
+<li>R4 et C2 : possède une fréquence de coupure de 1,6 kHz et permet de filtrer les bruits parasites engendrés par le traitement du signal</li>
 </ul>
-<p>La tension mesurée, V_ADC, permet ainsi de remonter à la valeur de résistance du graphite mesurée par le capteur, R_capteur , grâce à la formule : </p>
+<p>La tension mesurée, V_ADC, permet ainsi de remonter à la valeur de résistance du graphite mesurée par le capteur, R_capteur , grâce à la formule :</p>
 <p>R_capteur=R1*(1+R3/R_pot)*Vcc/V_ADC-R1-R5</p>
 
 
@@ -101,7 +101,7 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 <p>Et voici la visualisation 3D de notre PCB avec tous les composants (l'amplificateur est sous l'écran OLED).</p>
 
 ![visualisation 3D](images/visu_3D.jpg)</br>
-<i>Figure 5 : Visualisation 3D du PCB et composants</i>
+<i>Figure 6 : Visualisation 3D du PCB et composants</i>
 
 <h2 id="Réalisation du Shield">Réalisation du Shield</h2>
 <p>Une fois la conception du PCB sur KiCad terminée, nous avons pu passer à la réalisation physique de ce PCB.</p>
