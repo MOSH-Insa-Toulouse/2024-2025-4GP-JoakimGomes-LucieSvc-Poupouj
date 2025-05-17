@@ -76,7 +76,7 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 <p>Nous avons donc simulé un montage amplificateur transimpédance sur LTspice pour l'optimiser au mieux pour notre capteur : </p>
 
 ![Schéma du PCB](images/LTspcie.png)
-
+<i>Figure 3 : Schéma de notre montage amplificateur sur LTSpice</i>
 <p>Ce montage permet d'amplifier le signal du capteur à l'aide de l'amplificateur LTC1050, puis de le filtrer. Ce dernier est divisé en 3 pour limiter le bruit  :</p>
 <ul>
 <li> R5 et C1 : possède une fréquence de coupure de 16Hz et permet d'atténuer les bruits présents sur le signal d’entrée</li>
@@ -86,22 +86,23 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 <p>La tension mesurée, V_ADC, permet ainsi de remonter à la valeur de résistance du graphite mesurée par le capteur, R_capteur , grâce à la formule : </p>
 <p>R_capteur=R1*(1+R3/R_pot)*Vcc/V_ADC-R1-R5</p>
 
+
 <h2 id="Design du PCB avec KiCad">Design du PCB avec KiCad</h2>
 <p>La conception du PCB s'est faite à partir du logiciel KiCad 9.0</p>
 <p>Nous avons dans un premier temps reproduit le schéma électrique du système sur l'éditeur de Schématique. Il a fallu créer certains composants et récupérer d'autres dans les librairies de symboles (résistances et capacités notamment). Nous avons associé à chaque composant une empreinte et un modèle 3D. On peut alors effectuer l'ensemble des connexions entre les composants et l'Arduino via l'éditeur de Schématique.</p>
 
 ![Schéma du PCB](images/schematic_pcb.jpg)
-<i>Figure 3 : ensemble du fichier Schématique sous KiCad 9.0</i>
+<i>Figure 4 : ensemble du fichier Schématique sous KiCad 9.0</i>
 
 <p>Une fois le schéma électrique terminé, il faut placer les composants sur le PCB grâce à l'éditeur de PCB. L'objectif est de placer les composants judicieusement pour respecter les contraintes imposées, notamment éviter les vias, vérifier que les composants ne se superposent pas physiquement, respecter les dimensions des pistes et l'isolation.</p>
 
 ![Disposition des composants sur le PCB](images/PCB.jpg)
-<i>Figure 4 : Disposition des composants sur l'éditeur de PCB</i>
+<i>Figure 5 : Disposition des composants sur l'éditeur de PCB</i>
 
 <p>Et voici la visualisation 3D de notre PCB avec tous les composants (l'amplificateur est sous l'écran OLED).</p>
 
 ![visualisation 3D](images/visu_3D.jpg)</br>
-<i>Figure 5 : Visualisation 3D du PCB et composants</i>
+<i>Figure 6 : Visualisation 3D du PCB et composants</i>
 
 <h2 id="Réalisation du Shield">Réalisation du Shield</h2>
 <p>Une fois la conception du PCB sur KiCad terminée, nous avons pu passer à la réalisation physique de ce PCB.</p>
@@ -122,7 +123,7 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 <p>Maintenant que notre plaque PCB est réalisé virtuellement, puis physiquement, et que notre code arduino ainsi que notre application fonction correctement, nous pouvons réaliser le banc de test. Nous avons dont dans un premier temps </p>
 
 <h2 id="Datasheet">Datasheet</h2>
-<p>Le contenu de notre Datasheet se trouve avce le lien suivant : </p>
+<p>Le contenu de notre Datasheet se trouve avec le lien suivant : </p>
 
 <h2 id="Conclusion">Conclusion</h2>
 <p>Pour conclure, ce projet capteur a été très enrichissant sur plusieurs aspect. Nous avons pu développé de nombreuses compétences, surtout sur un aspect technique. Le plus pationnant au sein de ce projet étant la réalisation du projet de A à Z. En effet, nous avons commencé par la théorie puis la pratique avec la fabrication du capteur, jusqu'au résulatat final et une analyse de mesure. C'est donc un projet très complet d'un point de vue pédagogique. 
