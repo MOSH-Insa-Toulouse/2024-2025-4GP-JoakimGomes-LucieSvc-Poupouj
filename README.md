@@ -44,16 +44,16 @@
 <li>Un encodeur rotatoire pour naviguer dans le menu de l'écran OLED</li>
 
 </ul>
-</li>
+</li></br>
 <li>
 Le code Arduino qui permet de faire fonctionner tout le système : la communication Bluetooth, la gestion de l'écran OLED avec affichage des données, l'utilisation des deux capteurs de contrainte, la navigation dans le menu de l'écran OLED grâce à l'encodeur rotatoire, la modification du gain grâce au potentiomètre digital.
-</li>
+</li></br>
 <li>
 L'application Android developpée sur MIT App Inventor, permettant de visualiser les données directement sur son téléphone grâce à la communication Bluetooth.
-</li>
+</li></br>
 <li>
 Une datasheet pour le capteur en graphite détaillant ses performances et caractéristiques techniques.
-</li>
+</li></br>
 </ul>
 
 <h2 id="Matériel à disposition">Matériel à disposition</h2>
