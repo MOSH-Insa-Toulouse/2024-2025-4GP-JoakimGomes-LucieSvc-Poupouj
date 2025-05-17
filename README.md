@@ -106,8 +106,10 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 
 <h2 id="Réalisation du Shield">Réalisation du Shield</h2>
 <p>Une fois la conception du PCB sur KiCad terminée, nous avons pu passer à la réalisation physique de ce PCB. En premier temps, il faut pouvoir "collé" le masque de notre PCB sous KiCad sur une plaque vierge. Une fois cette étape réalisé il suffit de souder tous les supports des composants (cf Figure 7). Ensuite, il ne reste plus qu'à mettre les composants (cf Figure 8). </p>
+
 ![visualisation PCB_face_arriere](images/PCB_face_arriere.jpg)</br>
 <i>Figure  7: Visualisation de la face arrière de la PCB, c'est à die les soudures.</i>
+
 ![visualisation PCB_face_avant](images/PCB_face_avant.jpg)</br>
 <i>Figure  8: Visualisation de la face avant de la PCB, soit les composants</i>
 
