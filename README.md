@@ -58,6 +58,17 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 
 <h2 id="Matériel à disposition">Matériel à disposition</h2>
 <p>Voici la liste du matériel nécessaire pour concevoir le système ci-dessus:</p>
+<ul>
+<li>Résistances: une résistance de 1kΩ, une résistance de 10kΩ, deux résistances de 100 kΩ, une résistance de 47kΩ pour le Flex sensor commercial et enfin un potentiomètre digital MCP41050</li></br>
+<li>Capacités: trois capacités de 100 nF et une capacité de 1 µF</li></br>
+<li>Arduino Uno</li></br>
+<li>Un capteur graphite fait à partir d'un support papier et d'un crayon</li></br>
+<li>Flex Sensor commercial</li></br>
+<li>Un encodeur rotatoire ESP32</li></br>
+<li>Un écran OLED 128x64</li></br>
+<li>Un module Bluetooth HC-05</li></br>
+<li>Un amplificateur opérationnel LTC1050</li></br>
+</ul>
 
 <h2 id="Simulation électronique sur LTSpice">Simulation électronique sur LTSpice</h2>
 <p>Contenu de Simulation électronique sur LTSpice...</p>
