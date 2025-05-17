@@ -61,9 +61,9 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 <ul>
 <li>Résistances: une résistance de 1kΩ, une résistance de 10kΩ, deux résistances de 100 kΩ, une résistance de 47kΩ pour le Flex sensor commercial et enfin un potentiomètre digital MCP41050</li>
 <li>Capacités: trois capacités de 100 nF et une capacité de 1 µF</li>
-<li>Arduino Uno</li>
+<li>Un Arduino Uno</li>
 <li>Un capteur graphite fait à partir d'un support papier et d'un crayon</li>
-<li>Flex Sensor commercial</li>
+<li>Un Flex Sensor commercial</li>
 <li>Un encodeur rotatoire ESP32</li>
 <li>Un écran OLED 128x64</li>
 <li>Un module Bluetooth HC-05</li>
@@ -75,7 +75,7 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 
 <h2 id="Design du PCB avec KiCad">Design du PCB avec KiCad</h2>
 <p>La conception du PCB s'est faite à partir du logiciel KiCad 9.0</p>
-<p>Nous avons dans un premier temps reproduit le schéma électrique du système sur l'éditeur de Schématique. Il a fallu créer certains composants et récupérer d'autres dans les librairies de symboles(résistances et capacités notamment). Nous avons associé à chaque composant une empreinte et un modèle 3D. On peut alors effectuer l'ensemble des connexions entre les composants et l'Arduino via l'éditeur de Schématique.</p>
+<p>Nous avons dans un premier temps reproduit le schéma électrique du système sur l'éditeur de Schématique. Il a fallu créer certains composants et récupérer d'autres dans les librairies de symboles (résistances et capacités notamment). Nous avons associé à chaque composant une empreinte et un modèle 3D. On peut alors effectuer l'ensemble des connexions entre les composants et l'Arduino via l'éditeur de Schématique.</p>
 
 ![Schéma du PCB](images/schematic_pcb.jpg)
 <i>Figure 3 : ensemble du fichier Schématique sous KiCad 9.0</i>
