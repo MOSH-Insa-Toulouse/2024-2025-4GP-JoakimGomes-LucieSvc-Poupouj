@@ -17,6 +17,7 @@
 <li> <a href="#Matériel à disposition">Matériel à disposition </a></li>
 <li> <a href="#Simulation électronique sur LTSpice">Simulation électronique sur LTSpice </a></li>
 <li> <a href="#Design du PCB avec KiCad">Design du PCB avec KiCad </a></li>
+<li> <a href="#Réalisation du Shield">Réalisation du Shield </a></li>
 <li> <a href="#Développement du code Arduino">Développement du code Arduino </a></li>
 <li> <a href="#Développement de l'application mobile APK avec MIT App Inventor">Développement de l'application mobile APK avec MIT App Inventor </a></li>
 <li> <a href="#Banc de test">Banc de test </a></li>
@@ -71,7 +72,18 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 </ul>
 
 <h2 id="Simulation électronique sur LTSpice">Simulation électronique sur LTSpice</h2>
-<p>Contenu de Simulation électronique sur LTSpice...</p>
+<p>Les valeurs de résistance de notre capteur graphite sont très élecées, de l'odre du MMΩ. Afin de pouvoir les mesurer correctement, il est nécessaire d’amplifier le signal avant acquisition. Le courant mesuré après application d'une tension de 5V est donc très faible. Il est donc nécessaire d'amplifier le signal avant son acquisition</p>
+</p>Nous avons donc similué un montage amplificateur transimpédance sur LTspice pour l'optimiser au mieux pour notre capteur : </p>
+![Schéma du PCB](images/LTspcie.png)
+</p>Ce montage permet d'amplifier le signal du capteur à l'aide de l'amplificateur LTC1050, puis de le filtrer. Ce dernier est divisé en 3 pour limiter le bruit  :</p>
+<ul>
+<li> R5 et C1 : possède une fréquence de coupure de 16Hz et permet d'atténuer les bruits présents sur le signal d’entrée<li>
+<li> R3 et C4 en association avec l’AOP : filtre passe-bas avec une fréquence de coupure de 1,6 Hz, qui permet de filtrer le 50 Hz du réseau électrique<li>
+<li> R4 et C2 : possède une fréquence de coupure de 1,6 kHz et permet de filtrer les bruits parasites engendrés par le traitement du signal<li>
+<ul>
+</p>La tension mesurée, V_ADC, permet ainsi de remonter à la valeur de résistance du graphite mesurée par le capteur, R_capteur , grâce à la formule : </p>
+</p>R_capteur=R1*(1+R3/R_pot)*Vcc/V_ADC-R1-R5</p>
+
 
 <h2 id="Design du PCB avec KiCad">Design du PCB avec KiCad</h2>
 <p>La conception du PCB s'est faite à partir du logiciel KiCad 9.0</p>
@@ -84,6 +96,14 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 
 ![Disposition des composants sur le PCB](images/PCB.jpg)
 <i>Figure 4 : Disposition des composants sur l'éditeur de PCB</i>
+
+<p>Et voici la visualisation 3D de notre PCB avec tous les composants (l'amplificateur est sous l'écran OLED).</p>
+
+![visualisation 3D](images/visu_3D.jpg)</br>
+<i>Figure 5 : Visualisation 3D du PCB et composants</i>
+
+<h2 id="Réalisation du Shield">Réalisation du Shield</h2>
+<p>Une fois la conception du PCB sur KiCad terminée, nous avons pu passer à la réalisation physique de ce PCB.</p>
 
 <h2 id="Développement du code Arduino">Développement du code Arduino</h2>
 <p>Une fois la réalisation de notre plaque PCB effectué, c'est à dire la soudure des composants électronique sur la plaque, il faut à présent développer le code Arduino. Vous pouvez voir notre code sur le github dans la partie "Code Arduino".</p>
