@@ -88,7 +88,7 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 
 <p>Et voici la visualisation 3D de notre PCB avec tous les composants (l'amplificateur est sous l'écran OLED).</p>
 
-![visualisation 3D](images/visu_3D.jpg)
+![visualisation 3D](images/visu_3D.jpg)</br>
 <i>Figure 5 : Visualisation 3D du PCB et composants</i>
 
 <h2 id="Réalisation du Shield">Réalisation du Shield</h2>
