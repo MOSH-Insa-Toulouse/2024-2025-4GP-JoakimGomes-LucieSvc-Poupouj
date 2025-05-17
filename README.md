@@ -86,16 +86,16 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 <i>Figure 4 : Disposition des composants sur l'éditeur de PCB</i>
 
 <h2 id="Développement du code Arduino">Développement du code Arduino</h2>
-<p>Contenu de Développement du code Arduino...</p>
+<p>Une fois la réalisation de notre plaque PCB effectué, c'est à dire la soudure des composants électronique sur la plaque, il faut à présent développer le code Arduino. Vous pouvez voir notre code sur le github dans la partie "Code Arduino".</p>
 
 <h2 id="Développement de l'application mobile APK avec MIT App Inventor">Développement de l'application mobile APK avec MIT App Inventor</h2>
-<p>Contenu de Développement de l'application mobile APK avec MIT App Inventor...</p>
+<p>En même temps que la réalisation du code arduino, nous avons développé une application modible APK avec MIT App Inventor.</p>
 
 <h2 id="Banc de test">Banc de test</h2>
 <p>Contenu de Banc de test...</p>
 
 <h2 id="Datasheet">Datasheet</h2>
-<p>Contenu de Datasheet...</p>
+<p>Le contenu de notre Datasheet se trouve avce le lien suivant : </p>
 
 <h2 id="Conclusion">Conclusion</h2>
 <p>     Pour conclure, ce projet capteur a été très enrichissant sur plusieurs aspect. Nous avons pu développé de nombreuses compétences, surtout sur un aspect technique. Le plus pationnant au sein de ce projet étant la réalisation du projet de A à Z. En effet, nous avons commencé par la théorie puis la pratique avec la fabrication du capteur, jusqu'au résulatat final et une analyse de mesure. C'est donc un projet très complet d'un point de vue pédagogique. 
