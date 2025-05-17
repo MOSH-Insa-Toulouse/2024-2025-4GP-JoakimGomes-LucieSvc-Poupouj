@@ -110,9 +110,11 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 <p>Une fois la réalisation physique de notre plaque PCB effectué, il faut à présent développer le code Arduino. Vous pouvez voir notre code sur le github dans la partie "Code Arduino".</p>
 
 <h2 id="Développement de l'application mobile APK avec MIT App Inventor">Développement de l'application mobile APK avec MIT App Inventor</h2>
-<p>En même temps que la réalisation du code arduino, nous avons développé une application modible APK avec MIT App Inventor. Cette application permet d'effectué les mesures du capteur graphite, notamment obtenir un graphe  de la résistance en fonction de la tension/compression. L'application connecte donc via le capteur bluetooth notre capteur avec un téléphone android.</p>
+<p>En même temps que la réalisation du code arduino, nous avons développé une application mobile APK avec MIT App Inventor. Cette application permet d'effectuer les mesures du capteur graphite, notamment obtenir un graphe  de la résistance en fonction de la tension/compression en temps réel. L'application connecte donc via le module bluetooth notre capteur avec un téléphone android.</p>
+
 ![visualisation code]()</br>
 <i>Figure  : Visualisation du code de l'application</i>
+
 ![visualisation interface]()</br>
 <i>Figure  : Visualisation l'interface de l'application</i>
 
@@ -123,7 +125,7 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 <p>Le contenu de notre Datasheet se trouve avce le lien suivant : </p>
 
 <h2 id="Conclusion">Conclusion</h2>
-<p>     Pour conclure, ce projet capteur a été très enrichissant sur plusieurs aspect. Nous avons pu développé de nombreuses compétences, surtout sur un aspect technique. Le plus pationnant au sein de ce projet étant la réalisation du projet de A à Z. En effet, nous avons commencé par la théorie puis la pratique avec la fabrication du capteur, jusqu'au résulatat final et une analyse de mesure. C'est donc un projet très complet d'un point de vue pédagogique. 
+<p>Pour conclure, ce projet capteur a été très enrichissant sur plusieurs aspect. Nous avons pu développé de nombreuses compétences, surtout sur un aspect technique. Le plus pationnant au sein de ce projet étant la réalisation du projet de A à Z. En effet, nous avons commencé par la théorie puis la pratique avec la fabrication du capteur, jusqu'au résulatat final et une analyse de mesure. C'est donc un projet très complet d'un point de vue pédagogique. 
 
 En ce qui concerne le capteur graphite réalisé, il fonctionne et est utilisable. En revanche, il manque encore grandement de précision. En effet, il n'est pas assez "stable" et "constant" lors de son utilisation. Par exemple, il ne donne pas exactement les mêmes résultats après chaque mesure réalisé de manière identique. Ceci est sûrement dû au manque de matériel de mesure précis. Effectivement, faire les mesure "à la main" n'est pas très bon d'un point de vue rigueur et scientifique. Le capteur manque parfois de graphite ou alors la flexion ou compression n'est exactement bien réalisé... De plus on peut voir la limite d'utilisation au crayon HB (cf datasheet), en dessous duquel (donc crayon moins gras), il n'est plus possible d'être mesuré. Il ne peut donc pas être encore industrialisable.</p>
 </body>
