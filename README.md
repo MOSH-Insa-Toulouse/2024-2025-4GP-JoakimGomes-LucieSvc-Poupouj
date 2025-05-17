@@ -74,7 +74,11 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 <p>Contenu de Simulation électronique sur LTSpice...</p>
 
 <h2 id="Design du PCB avec KiCad">Design du PCB avec KiCad</h2>
-<p>Contenu de Design du PCB avec KiCad...</p>
+<p>La conception du PCB s'est faite à partir du logiciel KiCad 9.0</p>
+<p>Nous avons dans un premier temps reproduit le schéma électrique du système sur l'éditeur de Schématique. Il a fallu créer certains composants et récupérer d'autres dans les librairies de symboles(résistances et capacités notamment). Nous avons associé à chaque composant une empreinte et un modèle 3D. On peut alors effectuer l'ensemble des connexions entre les composants et l'Arduino via l'éditeur de Schématique.</p>
+
+![Schéma du PCB](images/schematic_pcb.jpg)
+<i>Figure 3 : ensemble du fichier Schématique sous KiCad 9.0</i>
 
 <h2 id="Développement du code Arduino">Développement du code Arduino</h2>
 <p>Contenu de Développement du code Arduino...</p>
