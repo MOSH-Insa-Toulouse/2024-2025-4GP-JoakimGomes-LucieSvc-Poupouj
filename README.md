@@ -112,7 +112,7 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 
 <h2 id="Développement de l'application mobile APK avec MIT App Inventor">Développement de l'application mobile APK avec MIT App Inventor</h2>
 <p>En même temps que la réalisation du code arduino, nous avons développé une application modible APK avec MIT App Inventor. Cette application permet d'effectué les mesures du capteur graphite, notamment obtenir un graphe  de la résistance en fonction de la tension/compression. L'application connecte donc via le capteur bluetooth notre capteur avec un téléphone android.</p>
-![visualisation code]()</br>
+![visualisation code](images/application.jpg)</br>
 <i>Figure  : Visualisation du code de l'application</i>
 ![visualisation interface]()</br>
 <i>Figure  : Visualisation l'interface de l'application</i>
