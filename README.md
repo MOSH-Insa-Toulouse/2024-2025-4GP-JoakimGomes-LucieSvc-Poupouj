@@ -37,14 +37,27 @@
 <li>Un schield PCB connecté à une carte Arduino UNO et contenant divers éléments:
 <ul>
 <li>Notre capteur de contrainte Low-tech</li>
+<li>Un capteur de flexion commercial</li>
+<li>Un amplificateur dont on pourra modifier le gain grâce à un potentiomètre pour le traitement du signal</li>
+<li>Un écran OLED pour afficher les données du capteur</li>
+<li>Un module Bluetooth permettant la communication avec un téléphone portable</li>
+<li>Un encodeur rotatoire pour naviguer dans le menu de l'écran OLED</li>
 
 </ul>
 </li>
-
+<li>
+Le code Arduino qui permet de faire fonctionner tout le système : la communication Bluetooth, la gestion de l'écran OLED avec affichage des données, l'utilisation des deux capteurs de contrainte, la navigation dans le menu de l'écran OLED grâce à l'encodeur rotatoire, la modification du gain grâce au potentiomètre digital.
+</li>
+<li>
+L'application Android developpée sur MIT App Inventor, permettant de visualiser les données directement sur son téléphone grâce à la communication Bluetooth.
+</li>
+<li>
+Une datasheet pour le capteur en graphite détaillant ses performances et caractéristiques techniques.
+</li>
 </ul>
 
 <h2 id="Matériel à disposition">Matériel à disposition</h2>
-<p>Contenu de Matériel à disposition...</p>
+<p>Voici la liste du matériel nécessaire pour concevoir le système ci-dessus:</p>
 
 <h2 id="Simulation électronique sur LTSpice">Simulation électronique sur LTSpice</h2>
 <p>Contenu de Simulation électronique sur LTSpice...</p>
