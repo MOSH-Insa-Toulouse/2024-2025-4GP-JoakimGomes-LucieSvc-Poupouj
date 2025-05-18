@@ -120,7 +120,7 @@ Maintenant que toutes ces étapes ont été effectué, nous devons en premier te
 
 
 <h2 id="Développement du code Arduino">Développement du code Arduino</h2>
-<p>Une fois la réalisation physique de notre plaque PCB effectué, il faut à présent développer le code Arduino. Vous pouvez voir notre code sur le github dans la partie "Code Arduino".</p>
+<p>Une fois la réalisation physique de notre plaque PCB effectué, il faut à présent développer le [code Arduino](https://github.com/MOSH-Insa-Toulouse/2024-2025-4GP-JoakimGomes-LucieSvc-Poupouj/blob/main/Code_Arduino/Capteur_graphite.ino).</p>
 
 <h2 id="Développement de l'application mobile APK avec MIT App Inventor">Développement de l'application mobile APK avec MIT App Inventor</h2>
 <p>En même temps que la réalisation du code arduino, nous avons développé une application mobile APK avec MIT App Inventor. Cette application permet d'effectuer les mesures du capteur graphite, notamment obtenir un graphe  de la résistance en fonction de la tension/compression en temps réel. L'application connecte donc via le module bluetooth notre capteur avec un téléphone android.</p>
