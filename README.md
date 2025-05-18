@@ -100,6 +100,7 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 ![Disposition des composants sur le PCB](images/PCB.jpg)
 <p> </p>
 <i>Figure 5 : Disposition des composants sur l'éditeur de PCB</i>
+<p> </p>
 
 <p>Et voici la visualisation 3D de notre PCB avec tous les composants (l'amplificateur est sous l'écran OLED).</p>
 
