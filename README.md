@@ -120,7 +120,7 @@ Maintenant que toutes ces étapes ont été effectué, nous allons procéder au 
 
 
 <h2 id="Développement du code Arduino">Développement du code Arduino</h2>
-<p>Une fois la réalisation physique de notre plaque PCB effectué, il faut à présent développer le code Arduino. Vous pouvez voir notre code sur le github dans la partie "Code Arduino".</p>
+<p>Une fois la réalisation physique de notre plaque PCB effectuée, il faut à présent développer le code Arduino. Vous pouvez voir notre code sur le github dans la partie "Code Arduino" : https://github.com/MOSH-Insa-Toulouse/2024-2025-4GP-JoakimGomes-LucieSvc-Poupouj/blob/main/Code_Arduino/Capteur_graphite.ino</p>
 
 <h2 id="Développement de l'application mobile APK avec MIT App Inventor">Développement de l'application mobile APK avec MIT App Inventor</h2>
 <p>En même temps que la réalisation du code arduino, nous avons développé une application mobile APK avec MIT App Inventor. Cette application permet d'effectuer les mesures du capteur graphite, notamment obtenir un graphe  de la résistance en fonction de la tension/compression en temps réel. L'application connecte donc via le module bluetooth notre capteur avec un téléphone android.</p>
@@ -132,10 +132,21 @@ Maintenant que toutes ces étapes ont été effectué, nous allons procéder au 
 <i>Figure  10: Visualisation de l'interface de l'application</i>
 
 <h2 id="Banc de test">Banc de test</h2>
-<p>Maintenant que notre plaque PCB est réalisé virtuellement, puis physiquement, et que notre code arduino ainsi que notre application fonction correctement, nous pouvons réaliser le banc de test. L'objectif est de calculer la valeur de la réustance du capteur graphite pour différente valeurs de déformation. Pour cela nous avons utilisé un support avec des cilindres de rayon différents : </p>
+<p>Maintenant que notre plaque PCB est réalisé virtuellement, puis physiquement, et que notre code arduino ainsi que notre application fonctionnent correctement, nous pouvons réaliser le banc de test. L'objectif est de calculer la valeur de la résistance du capteur graphite pour différentes valeurs de déformation. Pour cela nous avons utilisé un support avec des cylindres de rayons différents (1,5 cm, 2 cm, ..., 4cm). </p>
+<p>Notre papier de test ayant une épaisseur e = 0,214mm nous pouvons calculer la déformation engendrée par chacun des rayons de courbure avec la formule : ϵ = e/2r</p>
+<p>Nous avons donc effectué des mesures en Tension et en Compression pour des crayons de duretés différentes (2H, B, 3B, 6B) avec une valeur de potentiomètre 1 960 Ω.</p>
+<p>En traçant la courbe ΔR/R0 en fonction de la déformation, la théorie nous dit que nous devons avoir une relation linéaire entre les 2. Nous avons donc tracé une droite de régression linéaire passant par 0 pour chacune des courbes et trouvons les résultats suivants :</p>
+
+![visualisation interface](images/Tension.png)</br>
+<i>Figure  11: Courbes de ΔR/R0 en fonction de la déformation en Tension</i>
+
+![visualisation code](images/.png)</br>
+<i>Figure  12: Courbes de ΔR/R0 en fonction de la déformation en Compression</i>
+
+<p>Comme prédit par la théorie, nous pourvons observer que en Tension la résistance augmente avec la déformation, alors qu'en Compression elle diminue. De plus, plus le crayon est sec (ex : 2H) plus la pente est élevée. Nous remarquons cependant que pour le crayons 2H semble perdre en précision quand la déformation est élevée (pente de la courbe diminue). Cela peut s'expliquer car il y a très peu de chaines de particules permettant la déformation.</p>
 
 <h2 id="Datasheet">Datasheet</h2>
-<p>Le contenu de notre Datasheet se trouve avec le lien suivant : </p>
+<p>Le contenu de notre Datasheet se trouve avec le lien suivant : https://github.com/MOSH-Insa-Toulouse/2024-2025-4GP-JoakimGomes-LucieSvc-Poupouj/blob/main/Datasheet_Capteur_Graphite.docx</p>
 
 <h2 id="Conclusion">Conclusion</h2>
 <p>Pour conclure, ce projet capteur a été très enrichissant sur plusieurs aspect. Nous avons pu développer de nombreuses compétences, surtout sur un aspect technique. Le plus passionant au sein de ce projet étant la réalisation du projet de A à Z. En effet, nous avons commencé par la théorie, puis la pratique avec la fabrication du capteur, jusqu'au résultat final et une analyse de mesure. C'est donc un projet très complet d'un point de vue pédagogique. 
