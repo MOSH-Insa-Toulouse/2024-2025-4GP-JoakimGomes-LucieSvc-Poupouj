@@ -110,13 +110,13 @@ La première étape essentielle a consisté en la vérification du schéma du ci
 Ensuite, a fabrication a débuté par l’insolation UV d’une plaque d’époxy recouverte d’une fine couche de cuivre et d’un film photosensible. Cette exposition à la lumière permet de durcir les zones du film correspondant aux futures pistes du circuit. La plaque a ensuite été plongée dans un révélateur, ce qui a permis de dissoudre la résine restée non exposée à la lumière. La gravure des pistes a ensuite été réalisée par immersion de la plaque dans une solution de perchlorure de fer, qui attaque le cuivre non protégé par la résine insolée. Enfin, un nettoyage à l’acétone a permis de retirer les résidus de résine, révélant ainsi les pistes de cuivre définitives du circuit imprimé.
 L’ensemble de ces étapes de fabrication a été réalisé par Cathy Crouzet.
 
-Maintenant que toutes ces étapes ont été effectué, nous devons en premier temps réaliser une étape de perçage. Ensuite, il ne reste plus qu'à souder tous les supports des composants (cf Figure 7). Pour finir, il suffit de simplement mettre les composants sur leur support, notre capteur est enfin prêt à être utilisé ! (cf Figure 8) </p>
+Maintenant que toutes ces étapes ont été effectué, nous allons procéder au montage du capteur. Dans un premier temps, nous avons percé tous les trous afin de pouvoir souder tous les supports des composants sur la PCB. Ensuite, nous pouvons donc souder tous les supports des composants sur la PCB (cf Figure 7). Pour finir, il suffit de simplement mettre les composants sur leur support. Notre capteur est enfin prêt à être utilisé ! (cf Figure 8) </p>
 
 ![visualisation PCB_face_arriere](images/PCB_face_arriere.jpg)</br>
-<i>Figure  7: Visualisation de la face arrière de la PCB, c'est à die les soudures.</i>
+<i>Figure  7: Visualisation de la face arrière de la PCB, c'est à dire les soudures.</i>
 
 ![visualisation PCB_face_avant](images/Capteur.jpg)</br>
-<i>Figure  8: Visualisation de la face avant de la PCB, soit les composants</i>
+<i>Figure  8: Visualisation de la face avant de la PCB, c'est à dire les composants</i>
 
 
 <h2 id="Développement du code Arduino">Développement du code Arduino</h2>
@@ -138,7 +138,7 @@ Maintenant que toutes ces étapes ont été effectué, nous devons en premier te
 <p>Le contenu de notre Datasheet se trouve avec le lien suivant : </p>
 
 <h2 id="Conclusion">Conclusion</h2>
-<p>Pour conclure, ce projet capteur a été très enrichissant sur plusieurs aspect. Nous avons pu développer de nombreuses compétences, surtout sur un aspect technique. Le plus passionant au sein de ce projet étant la réalisation du projet de A à Z. En effet, nous avons commencé par la théorie puis la pratique avec la fabrication du capteur, jusqu'au résultat final et une analyse de mesure. C'est donc un projet très complet d'un point de vue pédagogique. 
+<p>Pour conclure, ce projet capteur a été très enrichissant sur plusieurs aspect. Nous avons pu développer de nombreuses compétences, surtout sur un aspect technique. Le plus passionant au sein de ce projet étant la réalisation du projet de A à Z. En effet, nous avons commencé par la théorie, puis la pratique avec la fabrication du capteur, jusqu'au résultat final et une analyse de mesure. C'est donc un projet très complet d'un point de vue pédagogique. 
 
 En ce qui concerne le capteur graphite réalisé, il fonctionne et est utilisable. En revanche, il manque encore grandement de précision. En effet, il n'est pas assez "stable" et "constant" lors de son utilisation. Par exemple, il ne donne pas exactement les mêmes résultats après chaque mesure réalisée de manière identique. Ceci est sûrement dû au manque de matériel de mesure précis. Effectivement, faire les mesure "à la main" n'est pas très bon d'un point de vue rigueur et scientifique. Le capteur manque parfois de graphite ou alors la flexion ou compression n'est pas exactement bien réalisé... De plus on peut voir la limite d'utilisation au crayon HB (cf datasheet), en dessous duquel (donc crayon moins gras), il n'est plus possible d'être mesuré. Il ne peut donc pas être encore industrialisable.</p>
 </body>
