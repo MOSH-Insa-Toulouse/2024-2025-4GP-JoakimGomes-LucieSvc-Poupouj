@@ -122,6 +122,7 @@ unsigned long lastSendTime = 0;
 
 void loop() {
   // autres traitements ici...
+  
   detecterAppuiBouton();
 
   if (encoderChanged) {
@@ -145,7 +146,16 @@ void setPotWiper(int addr, int pos) {
   SPI.transfer(pos);
   digitalWrite(csPin, HIGH);
   SPIWrite(MCP_WRITE, pos, ssMCPin);  ////
+  SPI.endTransaction();
+
+  //Rpot = pos * 50000 / 255;
+  //resistanceWB 
   resistanceWB = ( (rAB * pos) / maxPositions ) + rWiper;
+  /*Serial.print("Wiper position: ");
+  Serial.print(pos);
+  Serial.print("Resistance wiper to B: ");
+  Serial.print(resistanceWB);
+  Serial.println(" ohms");*/
 }
 
 void detecterAppuiBouton() {
@@ -254,12 +264,10 @@ void afficherValeurFlex() {
 
 void afficherValeurGraphite(float Rpot) {
   while (menuState == 4) {  // Reste dans cette boucle tant que l'utilisateur ne sort pas
-    currentTime = millis();
-    //Exécution toutes les 200 ms
-    if (currentTime - lastSendTime >= 200) {
-      lastSendTime = currentTime;
+    ecranOLED.clearDisplay();
+    ecranOLED.setTextSize(1);
+    ecranOLED.setTextColor(SSD1306_WHITE);
 
-<<<<<<< HEAD
     float VGraphiteBrute = analogRead(GRAPHITE_SENSOR_PIN);
     float RGraphiteSensor = ((1.0 + R3 / Rpot) * R1 * (1024.0/VGraphiteBrute)) - R1 - R5;
     RGraphiteSensor = RGraphiteSensor/1000000;
@@ -269,29 +277,15 @@ void afficherValeurGraphite(float Rpot) {
     Serial.println(VADC);
     Serial.println(RGraphiteSensor);
     Serial.println(Rpot);
-=======
-      ecranOLED.clearDisplay();
-      ecranOLED.setTextSize(1);
-      ecranOLED.setTextColor(SSD1306_WHITE);
->>>>>>> 7f8d72ed9517712ff5ca83709411ab14cfce1dd6
 
-      float VGraphiteBrute = analogRead(GRAPHITE_SENSOR_PIN);
-      float RGraphiteSensor = ((1.0 + R3 / Rpot) * R1 * (1024.0/VGraphiteBrute)) - R1 - R5;
-      RGraphiteSensor = RGraphiteSensor/1000000.0;
-      Serial.println("mesure: ");
-      Serial.println(VGraphiteBrute);
-      float VADC = (float)VGraphiteBrute*5.0/1024.0;
-      Serial.println(VADC);
-      Serial.println(RGraphiteSensor);  
 
-      ecranOLED.setCursor(10, 0);
-      ecranOLED.println("Graphite Sensor:");
+    ecranOLED.setCursor(10, 0);
+    ecranOLED.println("Graphite Sensor:");
 
-      ecranOLED.setCursor(10, 30);
-      ecranOLED.print(RGraphiteSensor);
-      ecranOLED.println(" MOhms");
+    ecranOLED.setCursor(10, 30);
+    ecranOLED.print(RGraphiteSensor);
+    ecranOLED.println(" MOhms");
 
-<<<<<<< HEAD
     ecranOLED.setCursor(10, 50);
     ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
     ecranOLED.println("Retour");
@@ -309,20 +303,7 @@ void afficherValeurGraphite(float Rpot) {
     lastSendTime = currentTime;
     
   }*/
-=======
-      ecranOLED.setCursor(10, 50);
-      ecranOLED.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
-      ecranOLED.println("Retour");
->>>>>>> 7f8d72ed9517712ff5ca83709411ab14cfce1dd6
 
-      ecranOLED.display();
-      
-      uint8_t ValeurResBitAppli;
-      ValeurResBitAppli=RGraphiteSensor;
-      Serial.println(ValeurResBitAppli); // Test pour vérifier la valeur mesurer à la sortie de A0 en cass de problèmes avec l'appli; ligne à vocation uniquement utilitaire pour le programmeur
-      bluetooth.write(ValeurResBitAppli);
-      detecterAppuiBouton();  // Vérifie si l'utilisateur appuie sur "Retour"
-    }
   }
 }
 
