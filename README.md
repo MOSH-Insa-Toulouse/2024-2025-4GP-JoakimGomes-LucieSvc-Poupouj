@@ -23,7 +23,7 @@
 <li> <a href="#Banc de test">Banc de test </a></li>
 <li> <a href="#Datasheet">Datasheet </a></li>
 <li> <a href="#Conclusion">Conclusion </a></li>
-<li> <a href="#Contact">Conclusion </a></li>
+<li> <a href="#Contact">Contact </a></li>
 </ul>
 
 <h2 id="Introduction">Introduction</h2>
