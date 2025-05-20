@@ -158,6 +158,7 @@ Maintenant que toutes ces étapes ont été effectué, nous allons procéder au 
 En ce qui concerne le capteur graphite réalisé, il fonctionne et est utilisable. En revanche, il manque encore grandement de précision. En effet, il n'est pas assez "stable" et "constant" lors de son utilisation. Par exemple, il ne donne pas exactement les mêmes résultats après chaque mesure réalisée de manière identique. Ceci est sûrement dû au manque de matériel de mesure précis. Effectivement, faire les mesure "à la main" n'est pas très bon d'un point de vue rigueur et scientifique. Le capteur manque parfois de graphite ou alors la flexion ou compression n'est pas exactement bien réalisé... De plus on peut voir la limite d'utilisation au crayon HB (cf datasheet), en dessous duquel (donc crayon moins gras), il n'est plus possible d'être mesuré. Il ne peut donc pas être encore industrialisable.</p>
 
 <h2 id="Contact">Contact</h2>
+<p>Pour tout besoin d'informations complémentaires, veuillez nous contacter via les adresses mails INSA suivantes :</p>
 <ul>
 <li>Joakim GOMES CORREIA : gomescor@insa-toulouse.fr</li>
 <li>Lucie SAUVIAC : sauviac@insa-toulouse.fr</li>
