@@ -144,7 +144,7 @@ Maintenant que toutes ces étapes ont été effectué, nous allons procéder au 
 ![visualisation interface](images/Tension.png)</br>
 <i>Figure  11: Courbes de ΔR/R0 en fonction de la déformation en Tension</i>
 
-![visualisation code](images/Compression.png.png)</br>
+![visualisation code](images/Compression.png)</br>
 <i>Figure  12: Courbes de ΔR/R0 en fonction de la déformation en Compression</i>
 
 <p>Comme prédit par la théorie, nous pourvons observer que en Tension la résistance augmente avec la déformation, alors qu'en Compression elle diminue. De plus, plus le crayon est sec (ex : 2H) plus la pente est élevée. Nous remarquons cependant que pour le crayons 2H semble perdre en précision quand la déformation est élevée (pente de la courbe diminue). Cela peut s'expliquer car il y a très peu de chaines de particules permettant la déformation.</p>
