@@ -129,7 +129,7 @@ Maintenant que toutes ces étapes ont été effectué, nous allons procéder au 
 <h2 id="Développement de l'application mobile APK avec MIT App Inventor">Développement de l'application mobile APK avec MIT App Inventor</h2>
 <p>En même temps que la réalisation du code arduino, nous avons développé une application mobile APK avec MIT App Inventor. Cette application permet d'effectuer les mesures du capteur graphite, notamment obtenir un graphe  de la résistance en fonction de la tension/compression en temps réel. L'application connecte donc via le module bluetooth notre capteur avec un téléphone android.</p>
 
-![visualisation interface](images/Code_application_Annoté.png.png)</br>
+![visualisation interface](images/Code_application_Annoté.png)</br>
 <i>Figure  9: Visualisation du code de l'application</i>
 
 ![visualisation code](images/Application.png)</br>
