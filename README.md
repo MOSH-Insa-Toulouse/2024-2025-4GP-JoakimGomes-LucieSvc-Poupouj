@@ -23,6 +23,7 @@
 <li> <a href="#Banc de test">Banc de test </a></li>
 <li> <a href="#Datasheet">Datasheet </a></li>
 <li> <a href="#Conclusion">Conclusion </a></li>
+<li> <a href="#Contact">Contact </a></li>
 </ul>
 
 <h2 id="Introduction">Introduction</h2>
@@ -30,6 +31,7 @@
 <p>L'UF "du capteur au banc de test" a pour objectif de concevoir un capteur low-tech et de pouvoir ensuite le tester afin de le comparer avec un capteur commercial. Le capteur est à base de graphite, que l'on retrouve notamment dans nos crayons à papier. Son développement est issu de l'article scientifique <i>"Pencil Drawn Strain Gauges and Chemiresistors on Paper"</i>(Cheng-Wei Lin*, Zhibo Zhao*, Jaemyung Kim & Jiaxing Huang). Concevoir ce capteur est relativement simple : on applique à l'aide d'un crayon, du graphite sur un morceau de papier. Les couches de graphite déposées sur le papier agissent comme un conducteur électrique qui, lorsqu'on déforme le papier, a une conductivité (et donc une résistance) qui varie. Cela s'explique par le fait que  le nombre de chaînes de particules de graphite connectées varie selon le type de déformation. En tension, il y a moins de chaines et ces dernières sont plus courtes. C'est le contraire en compression avec des chaines plus proches, laissant ainsi mieux passer le courant.</p>
 
 ![Fonctionnement du capteur](images/capteur_fonctionnement.jpg)
+<p> </p>
 <i>Figure 1 : Image issue de l'article "Pencil Drawn Strain Gauges and Chemiresistors on Paper" qui explique les déformations des chaines sous compression et tension</i>
 
 <h2 id="Livrables">Livrables</h2>
@@ -97,7 +99,9 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 <p>Une fois le schéma électrique terminé, il faut placer les composants sur le PCB grâce à l'éditeur de PCB. L'objectif est de placer les composants judicieusement pour respecter les contraintes imposées, notamment éviter les vias, vérifier que les composants ne se superposent pas physiquement, respecter les dimensions des pistes et l'isolation.</p>
 
 ![Disposition des composants sur le PCB](images/PCB.jpg)
+<p> </p>
 <i>Figure 5 : Disposition des composants sur l'éditeur de PCB</i>
+<p> </p>
 
 <p>Et voici la visualisation 3D de notre PCB avec tous les composants (l'amplificateur est sous l'écran OLED).</p>
 
@@ -110,13 +114,13 @@ La première étape essentielle a consisté en la vérification du schéma du ci
 Ensuite, a fabrication a débuté par l’insolation UV d’une plaque d’époxy recouverte d’une fine couche de cuivre et d’un film photosensible. Cette exposition à la lumière permet de durcir les zones du film correspondant aux futures pistes du circuit. La plaque a ensuite été plongée dans un révélateur, ce qui a permis de dissoudre la résine restée non exposée à la lumière. La gravure des pistes a ensuite été réalisée par immersion de la plaque dans une solution de perchlorure de fer, qui attaque le cuivre non protégé par la résine insolée. Enfin, un nettoyage à l’acétone a permis de retirer les résidus de résine, révélant ainsi les pistes de cuivre définitives du circuit imprimé.
 L’ensemble de ces étapes de fabrication a été réalisé par Cathy Crouzet.
 
-Maintenant que toutes ces étapes ont été effectué, nous devons en premier temps réaliser une étape de perçage. Ensuite, il ne reste plus qu'à souder tous les supports des composants (cf Figure 7). Pour finir, il suffit de simplement mettre les composants sur leur support, notre capteur est enfin prêt à être utilisé ! (cf Figure 8) </p>
+Maintenant que toutes ces étapes ont été effectué, nous allons procéder au montage du capteur. Dans un premier temps, nous avons percé tous les trous afin de pouvoir souder tous les supports des composants sur la PCB. Ensuite, nous pouvons donc souder tous les supports des composants sur la PCB (cf Figure 7). Pour finir, il suffit de simplement mettre les composants sur leur support. Notre capteur est enfin prêt à être utilisé ! (cf Figure 8) </p>
 
 ![visualisation PCB_face_arriere](images/PCB_face_arriere.jpg)</br>
-<i>Figure  7: Visualisation de la face arrière de la PCB, c'est à die les soudures.</i>
+<i>Figure  7: Visualisation de la face arrière de la PCB, c'est à dire les soudures.</i>
 
 ![visualisation PCB_face_avant](images/Capteur.jpg)</br>
-<i>Figure  8: Visualisation de la face avant de la PCB, soit les composants</i>
+<i>Figure  8: Visualisation de la face avant de la PCB, c'est à dire les composants</i>
 
 
 <h2 id="Développement du code Arduino">Développement du code Arduino</h2>
@@ -125,7 +129,7 @@ Maintenant que toutes ces étapes ont été effectué, nous devons en premier te
 <h2 id="Développement de l'application mobile APK avec MIT App Inventor">Développement de l'application mobile APK avec MIT App Inventor</h2>
 <p>En même temps que la réalisation du code arduino, nous avons développé une application mobile APK avec MIT App Inventor. Cette application permet d'effectuer les mesures du capteur graphite, notamment obtenir un graphe  de la résistance en fonction de la tension/compression en temps réel. L'application connecte donc via le module bluetooth notre capteur avec un téléphone android.</p>
 
-![visualisation interface](images/Code_application.png)</br>
+![visualisation interface](images/Code_application_Annoté.png)</br>
 <i>Figure  9: Visualisation du code de l'application</i>
 
 ![visualisation code](images/Application.png)</br>
@@ -140,7 +144,7 @@ Maintenant que toutes ces étapes ont été effectué, nous devons en premier te
 ![visualisation interface](images/Tension.png)</br>
 <i>Figure  11: Courbes de ΔR/R0 en fonction de la déformation en Tension</i>
 
-![visualisation code](images/.png)</br>
+![visualisation code](images/Compression.png)</br>
 <i>Figure  12: Courbes de ΔR/R0 en fonction de la déformation en Compression</i>
 
 <p>Comme prédit par la théorie, nous pourvons observer que en Tension la résistance augmente avec la déformation, alors qu'en Compression elle diminue. De plus, plus le crayon est sec (ex : 2H) plus la pente est élevée. Nous remarquons cependant que pour le crayons 2H semble perdre en précision quand la déformation est élevée (pente de la courbe diminue). Cela peut s'expliquer car il y a très peu de chaines de particules permettant la déformation.</p>
@@ -149,8 +153,17 @@ Maintenant que toutes ces étapes ont été effectué, nous devons en premier te
 <p>Le contenu de notre Datasheet se trouve avec le lien suivant : https://github.com/MOSH-Insa-Toulouse/2024-2025-4GP-JoakimGomes-LucieSvc-Poupouj/blob/main/Datasheet_Capteur_Graphite.docx</p>
 
 <h2 id="Conclusion">Conclusion</h2>
-<p>Pour conclure, ce projet capteur a été très enrichissant sur plusieurs aspect. Nous avons pu développer de nombreuses compétences, surtout sur un aspect technique. Le plus passionant au sein de ce projet étant la réalisation du projet de A à Z. En effet, nous avons commencé par la théorie puis la pratique avec la fabrication du capteur, jusqu'au résultat final et une analyse de mesure. C'est donc un projet très complet d'un point de vue pédagogique. 
+<p>Pour conclure, ce projet capteur a été très enrichissant sur plusieurs aspect. Nous avons pu développer de nombreuses compétences, surtout sur un aspect technique. Le plus passionant au sein de ce projet étant la réalisation du projet de A à Z. En effet, nous avons commencé par la théorie, puis la pratique avec la fabrication du capteur, jusqu'au résultat final et une analyse de mesure. C'est donc un projet très complet d'un point de vue pédagogique. 
 
-En ce qui concerne le capteur graphite réalisé, il fonctionne et est utilisable. En revanche, il manque encore grandement de précision. En effet, il n'est pas assez "stable" et "constant" lors de son utilisation. Par exemple, il ne donne pas exactement les mêmes résultats après chaque mesure réalisée de manière identique. Ceci est sûrement dû au manque de matériel de mesure précis. Effectivement, faire les mesure "à la main" n'est pas très bon d'un point de vue rigueur et scientifique. Le capteur manque parfois de graphite ou alors la flexion ou compression n'est pas exactement bien réalisé... De plus on peut voir la limite d'utilisation au crayon HB (cf datasheet), en dessous duquel (donc crayon moins gras), il n'est plus possible d'être mesuré. Il ne peut donc pas être encore industrialisable.</p>
+En ce qui concerne le capteur graphite réalisé, il fonctionne et est utilisable. En revanche, il manque encore grandement de précision. En effet, il n'est pas assez "stable" et "constant" lors de son utilisation. Par exemple, il ne donne pas exactement les mêmes résultats après chaque mesure réalisée de manière identique. Ceci est sûrement dû au manque de matériel de mesure précis. Effectivement, faire les mesures "à la main" n'est pas très bon d'un point de vue rigueur et scientifique. Le capteur manque parfois de graphite ou alors la flexion ou compression n'est pas exactement bien réalisée... De plus on peut voir la limite d'utilisation au crayon 2H (cf datasheet), en dessous duquel (donc crayon moins gras), il n'est plus possible d'être mesuré. Il ne peut donc pas encore être industrialisable. Cependant, nous pouvons quand même noté que le 2H fonctionne contrairement aux études menées dans "Pencil Drawn Strain Gauges and Chemiresistors on Paper"(Cheng-Wei Lin*, Zhibo Zhao*, Jaemyung Kim & Jiaxing Huang). Nous observons notamment une bonne réponse linéaire jusqu'à une déformation de 0.007 en tension.</p>
+
+<h2 id="Contact">Contact</h2>
+<p>Pour tout besoin d'informations complémentaires, veuillez nous contacter via les adresses mails INSA suivantes :</p>
+<ul>
+<li>Joakim GOMES CORREIA : gomescor@insa-toulouse.fr</li>
+<li>Lucie SAUVIAC : sauviac@insa-toulouse.fr</li>
+<li>Nicolas POUJOL : npoujol@insa-toulouse.fr</li>
+</ul>
+
 </body>
 </html>
