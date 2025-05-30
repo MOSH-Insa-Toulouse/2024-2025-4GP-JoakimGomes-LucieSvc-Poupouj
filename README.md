@@ -65,7 +65,7 @@ Une datasheet pour le capteur en graphite détaillant ses performances et caract
 <li>Un Arduino Uno</li>
 <li>Un capteur graphite fait à partir d'un support papier et d'un crayon</li>
 <li>Un Flex Sensor commercial</li>
-<li>Un encodeur rotatoire ESP32</li>
+<li>Un encodeur rotatoire Keyes KY-040</li>
 <li>Un écran OLED 128x64</li>
 <li>Un module Bluetooth HC-05</li>
 <li>Un amplificateur opérationnel LTC1050</li>
